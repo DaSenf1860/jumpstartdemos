@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Notebook",
-    "displayName": "nb_machine_data_fpy_mqtt",
+    "displayName": "simulate_reference_data",
     "description": "New notebook"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "0fe14fa1-293d-a939-446f-4b77a17a8c9e"
+    "logicalId": "d30de5a7-f61b-9db4-4cfa-76b0da8824d2"
   }
 }

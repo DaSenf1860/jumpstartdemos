@@ -8,14 +8,8 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "ManufacturingData",
-# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
-# META       "known_lakehouses": [
-# META         {
-# META           "id": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-# META         }
-# META       ]
+# META       "default_lakehouse_name": "",
+# META       "default_lakehouse_workspace_id": ""
 # META     }
 # META   }
 # META }
@@ -28,9 +22,36 @@
 
 # CELL ********************
 
+%pip install msfabricpysdkcore -q
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from msfabricpysdkcore import FabricClientCore
+fcc = FabricClientCore()
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+ws_id = notebookutils.runtime.context["currentWorkspaceId"]
+manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
+manufacturing_data
 
 # METADATA ********************
 
@@ -450,19 +471,19 @@ print("\n✓ All test data generated successfully!")
 # CELL ********************
 
 # Convert pandas DataFrames to PySpark DataFrames and save as Delta tables
-spark.createDataFrame(sites_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.sites")
+spark.createDataFrame(sites_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/sites")
 
-spark.createDataFrame(machines_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.machines")
+spark.createDataFrame(machines_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/machines")
 
-spark.createDataFrame(products_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.products")
+spark.createDataFrame(products_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/products")
 
-spark.createDataFrame(components_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.components")
+spark.createDataFrame(components_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/components")
 
-spark.createDataFrame(machine_product_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.machine_product_capability")
+spark.createDataFrame(machine_product_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/machine_product_capability")
 
-spark.createDataFrame(product_components_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.product_components")
+spark.createDataFrame(product_components_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/product_components")
 
-spark.createDataFrame(production_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("ManufacturingData.masterdata.production_records")
+spark.createDataFrame(production_df).write.format("delta").mode("overwrite").option("overwriteSchema", True).save(f"{manufacturing_data}/masterdata/production_records")
 
 print("All tables saved to Manufacturing.masterdata schema")
 

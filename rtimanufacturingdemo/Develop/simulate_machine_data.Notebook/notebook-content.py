@@ -8,14 +8,8 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "ManufacturingData",
-# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
-# META       "known_lakehouses": [
-# META         {
-# META           "id": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-# META         }
-# META       ]
+# META       "default_lakehouse_name": "",
+# META       "default_lakehouse_workspace_id": ""
 # META     }
 # META   }
 # META }
@@ -60,6 +54,22 @@ import ssl
 from time import sleep, time
 import base64
 import uuid
+fcc = FabricClientCore()
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+ws_id = notebookutils.runtime.context["currentWorkspaceId"]
+manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
+manufacturing_data
 
 # METADATA ********************
 
@@ -71,38 +81,45 @@ import uuid
 # CELL ********************
 
 
-
-
 # Event Hub configuration
-fcc = FabricClientCore()
-ws = fcc.get_workspace_by_name("manufacturingdemo")
-es = fcc.get_eventstream(ws.id, eventstream_name="ES_machinedata")
-topology = fcc.get_eventstream_topology(ws.id, es.id)
+es = fcc.get_eventstream(ws_id, eventstream_name="es_machinedata")
+topology = fcc.get_eventstream_topology(ws_id, es.id)
 for source in topology["sources"]:
     if source["name"] == 'CustomEndpoint-Source':
         source_id = source["id"]
         break
 source_id = source_id if source_id else None
 if source_id:
-    custom_endpoint_info = fcc.get_eventstream_source_connection(ws.id,es.id, source_id)
+    custom_endpoint_info = fcc.get_eventstream_source_connection(ws_id,es.id, source_id)
     EVENT_HUB_NAME = custom_endpoint_info["eventHubName"]
     EVENT_HUB_CONNECTION_STR = custom_endpoint_info["accessKeys"]["primaryConnectionString"]
 
-es = fcc.get_eventstream(ws.id, eventstream_name="mqtt")
-topology = fcc.get_eventstream_topology(ws.id, es.id)
+es = fcc.get_eventstream(ws_id, eventstream_name="mqtt")
+topology = fcc.get_eventstream_topology(ws_id, es.id)
 for source in topology["sources"]:
     if source["name"] == 'CustomEndpointSource':
         source_id = source["id"]
         break
 source_id = source_id if source_id else None
 if source_id:
-    custom_endpoint_info = fcc.get_eventstream_source_connection(ws.id,es.id, source_id)
+    custom_endpoint_info = fcc.get_eventstream_source_connection(ws_id,es.id, source_id)
     EVENT_HUB_NAME_MQTT = custom_endpoint_info["eventHubName"]
     EVENT_HUB_CONNECTION_STR_MQTT = custom_endpoint_info["accessKeys"]["primaryConnectionString"]
 
-df = spark.sql("SELECT * FROM ManufacturingData.masterdata.machines")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+
+df = spark.read.format("delta").load(f"{manufacturing_data}/masterdata/machines")
 machines_df = df.toPandas()
-df = spark.sql("SELECT * FROM ManufacturingData.masterdata.products")
+df = spark.read.format("delta").load(f"{manufacturing_data}/masterdata/products")
 products_df = df.toPandas()
 machines = machines_df['machineid'].astype(int).tolist()
 products = products_df['productid'].astype(int).tolist()
