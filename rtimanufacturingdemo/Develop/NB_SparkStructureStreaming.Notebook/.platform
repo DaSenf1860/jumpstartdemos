@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "NB_SparkStructureStreaming"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "35ec9e7e-a4fc-9c5d-42c7-8f1d34f68f56"
+  }
+}
