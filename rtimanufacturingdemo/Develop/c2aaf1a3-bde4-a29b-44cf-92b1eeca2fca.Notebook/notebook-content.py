@@ -36,6 +36,7 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+import requests
 from msfabricpysdkcore import FabricClientCore
 fcc = FabricClientCore()
 
@@ -52,6 +53,20 @@ ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
 manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
 manufacturing_data
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+eh = fcc.get_eventhouse(ws_id, eventhouse_name="machinedata")
+eh_query_uri = eh.properties['queryServiceUri']
+eh_query_uri
 
 # METADATA ********************
 
@@ -496,6 +511,124 @@ print("All tables saved to Manufacturing.masterdata schema")
 
 # CELL ********************
 
+token = notebookutils.credentials.getToken("kusto")
+headers = {"Authorization": "Bearer " + token}
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+def kusto_command(csl):
+    url = f"{eh_query_uri/v1/rest/mgmt"
+    body = {"csl": csl, "db": "machinedata"}
+    resp = requests.post(url, json=body, headers=headers)
+    return resp
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+### KQL
+command = """
+ .create-or-alter external table machines_external (
+     machineid: int,
+     machinename: string,
+     siteid: int,
+     machinetypeid: int,
+     manufacturerid: int,
+     status: string,
+     manufactureyear: int,
+     hourlycapacity: real,
+     operator: string,
+     sitename: string,
+     city: string,
+     country: string,
+     capacity: long,
+     establishedyear: long,
+     latitude: real,
+     longitude: real
+ )
+ kind = delta
+ (
+     '{manufacturing_data}/masterdata/machines;impersonate'
+ )"""
+
+resp = kusto_command(command)
+resp.status_code
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+### KQL
+command = """
+.set-or-replace machines_interal <| external_table('machines_external')
+"""
+
+resp = kusto_command(command)
+resp.status_code
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+### KQL
+command = f"""
+.create-or-alter external table sites_external (
+     siteid: int,
+     sitename: string,
+     city: string,
+     country: string,
+     capacity: int,
+     establishedyear: int,
+     latitude: real,
+     longitude: real
+ )
+ kind = delta
+ (
+     '{manufacturing_data}/masterdata/sites;impersonate'
+ )
+"""
+
+resp = kusto_command(command)
+resp.status_code
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+### KQL
+command = """
+.set-or-replace sites_interal <| external_table('sites_external')
+"""
+
+resp = kusto_command(command)
+resp.status_code
 
 # METADATA ********************
 
