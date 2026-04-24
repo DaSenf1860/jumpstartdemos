@@ -23,6 +23,12 @@
         "content": "",
         "title": "",
         "dataSourceId": "e5ffe2e9-2c39-471e-9acf-4fd25cec2904"
+      },
+      {
+        "id": "d473cc17-b827-4d25-8105-54005d28900f",
+        "content": "Quality()",
+        "title": "",
+        "dataSourceId": "e5ffe2e9-2c39-471e-9acf-4fd25cec2904"
       }
     ]
   }
