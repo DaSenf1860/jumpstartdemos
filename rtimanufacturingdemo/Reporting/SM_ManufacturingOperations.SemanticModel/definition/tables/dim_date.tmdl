@@ -1,0 +1,171 @@
+table dim_date
+	lineageTag: f8ad38ae-878b-4078-a42a-b634d37c9064
+	sourceLineageTag: [dbo].[dim_date]
+
+	column date_id
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: varchar(8000)
+		lineageTag: f7224ef6-b2a7-4b39-9d0a-4ff3778a0ef6
+		sourceLineageTag: date_id
+		summarizeBy: none
+		sourceColumn: date_id
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 0a6b854b-be9b-4209-a016-d3d9667299c5
+		sourceLineageTag: year
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 37f3dd6e-0377-4599-a8cf-3c17c438e3fe
+		sourceLineageTag: year_month
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 08c01244-d5ee-4a39-87dc-10a198dff05f
+		sourceLineageTag: day
+		summarizeBy: none
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_hour
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ac242c1d-03b6-4562-978e-9739d7f7f77a
+		sourceLineageTag: date_hour
+		summarizeBy: none
+		sourceColumn: date_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 42236624-475f-4736-be59-b5635d279a65
+		sourceLineageTag: day_of_week
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_week
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b8713ea9-cfb6-4447-91e8-c1587431cad8
+		sourceLineageTag: year_week
+		summarizeBy: none
+		sourceColumn: year_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_quarter
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 819ced94-aa97-4f09-a42f-916ca9e46912
+		sourceLineageTag: year_quarter
+		summarizeBy: none
+		sourceColumn: year_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_day_of_year
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 30db2bc1-504b-4f2e-ad39-5fcb4408a9e1
+		sourceLineageTag: year_day_of_year
+		summarizeBy: none
+		sourceColumn: year_day_of_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: 740bf27c-b473-4636-b9f2-4cd2446a3180
+		sourceLineageTag: is_weekend
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: be9980c4-1781-4387-9e09-5a3eb9566546
+		sourceLineageTag: day_name
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 43de3e03-3bb5-48d1-8317-1668a9263747
+		sourceLineageTag: year_month_name
+		summarizeBy: none
+		sourceColumn: year_month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5ad19d26-95db-455a-8246-ededf01b0a67
+		sourceLineageTag: shift
+		summarizeBy: none
+		sourceColumn: shift
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'year Hierarchy'
+		lineageTag: 7c6df67a-1478-4cc0-a5e6-1e2a5158c2ac
+
+		level year
+			lineageTag: 0d90a1cc-2983-4dfa-a1af-74d2cb19ccde
+			column: year
+
+		level year_quarter
+			lineageTag: 9eb0211e-03bf-4492-bc02-007e6e8f67c8
+			column: year_quarter
+
+		level year_month_name
+			lineageTag: 707e9ed1-cbd7-4db0-a0f5-9bc4ea6a0f12
+			column: year_month_name
+
+		level date_id
+			lineageTag: 8e050f31-5b7c-45cd-a1fc-5ace838f6820
+			column: date_id
+
+	partition dim_date = entity
+		mode: directLake
+		source
+			entityName: dim_date
+			schemaName: dbo
+			expressionSource: 'DirectLake - ManufacturingData'
+

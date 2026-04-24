@@ -1,0 +1,106 @@
+table sensor_data
+	lineageTag: 52453090-6d13-4740-b3f7-ae24918940d0
+	sourceLineageTag: [dbo].[sensor_data]
+
+	column machine_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e77c348d-149f-4293-bf1a-2012f9904c72
+		sourceLineageTag: machine_id
+		summarizeBy: sum
+		sourceColumn: machine_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 8e67aa4b-7ea1-4c8b-8bb5-2600e543f31b
+		sourceLineageTag: site_id
+		summarizeBy: sum
+		sourceColumn: site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sensor_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5bb4a46a-9851-455b-b33a-d8692af1b116
+		sourceLineageTag: sensor_id
+		summarizeBy: none
+		sourceColumn: sensor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sensor_type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ea9f261e-abd4-462d-b234-3f1bc2389358
+		sourceLineageTag: sensor_type
+		summarizeBy: none
+		sourceColumn: sensor_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column measure_unit
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 23e92799-48f1-4228-9968-fe6b9c6e41dc
+		sourceLineageTag: measure_unit
+		summarizeBy: none
+		sourceColumn: measure_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column sensor_value
+		dataType: double
+		sourceProviderType: decimal(38, 18)
+		lineageTag: c30dfcef-b6c2-449a-8c09-7a388834f9b1
+		sourceLineageTag: sensor_value
+		summarizeBy: sum
+		sourceColumn: sensor_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 6e238d96-9e64-45e7-a57e-bc89d05dc351
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5b7f0f41-fba0-453e-88e4-36cddbb16cbb
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8846ed47-f86c-4835-a130-2fe3ecf14ad9
+		sourceLineageTag: Time
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sensor_data = entity
+		mode: directLake
+		source
+			entityName: sensor_data
+			schemaName: dbo
+			expressionSource: 'DirectLake - ManufacturingData'
+

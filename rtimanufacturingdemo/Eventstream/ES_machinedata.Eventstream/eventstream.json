@@ -1,0 +1,81 @@
+{
+  "sources": [
+    {
+      "id": "8bfac3b1-40df-46e3-8021-30a39fffdd4a",
+      "name": "CustomEndpoint-Source",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "5d8ff5a8-2931-4d75-8520-414b342a42f6",
+      "name": "060307a6-7c71-43e1-b090-9fd9391228fd",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "tableName": "machineraw",
+        "connectionName": "ES_machinedata_9g0mof",
+        "mappingRuleName": "machineraw_mapping_2"
+      },
+      "inputNodes": [
+        {
+          "name": "ESmachinedata-stream"
+        }
+      ]
+    },
+    {
+      "id": "64fe5482-c0cc-4736-9ad3-31b8eb84500b",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "tableName": "machineraw",
+        "connectionName": null,
+        "mappingRuleName": null
+      },
+      "inputNodes": [
+        {
+          "name": "ESmachinedata-stream"
+        }
+      ]
+    },
+    {
+      "id": "c2180f54-33a1-4cac-b8e2-450cb8a5c518",
+      "name": "931f7780-2f8b-4f30-ad6a-fe0e1cc694c0",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "tableName": "machineraw",
+        "connectionName": null,
+        "mappingRuleName": null
+      },
+      "inputNodes": [
+        {
+          "name": "ESmachinedata-stream"
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "ed1ef874-11c0-4ab6-a7bf-54a2c52a0e20",
+      "name": "ESmachinedata-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "CustomEndpoint-Source"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

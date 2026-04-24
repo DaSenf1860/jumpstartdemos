@@ -1,0 +1,234 @@
+table oee
+	lineageTag: de3312e4-3c92-469d-a720-64f5ddefec77
+	sourceLineageTag: [dbo].[oee]
+
+	measure 'Average Availability' = AVERAGE('oee'[Availability])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 701e9051-e40b-4b6e-921c-c6db35788938
+
+		changedProperty = FormatString
+
+	measure 'Average OEE' = AVERAGE('oee'[OEE])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 18cfe277-644c-43dd-b85a-aa45d2520ae7
+
+		changedProperty = FormatString
+
+	measure 'Average Performance' = AVERAGE('oee'[Performance])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d871254d-6c7d-43e7-b633-af8bd27fcf57
+
+		changedProperty = FormatString
+
+	measure 'Average Quality' = AVERAGE('oee'[Quality])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a1952eb4-6e89-4cf0-8dea-a3952305c7d7
+
+		changedProperty = FormatString
+
+	measure Goal_Availability = 8/10
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 40abaac7-37d7-4158-a3f0-ef36502ebe4a
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure Goal_OEE = 6/10
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f64029e2-d213-4556-9645-0d595a7e2f6e
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure Goal_Performance = 7/10
+		lineageTag: f17078fc-9943-4dad-96d3-1a400d20990d
+
+		changedProperty = Name
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Goal_Quality = 9/10
+		lineageTag: 0aa45018-fb82-4b13-8a70-f5e13352021a
+
+		changedProperty = Name
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Maximum = 1
+		formatString: 0%;-0%;0%
+		lineageTag: 32dc63b2-e86a-4780-aa35-0515513fab54
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	column machine_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 1a36b48c-37f0-4cf8-9911-d58be84193dd
+		sourceLineageTag: machine_id
+		summarizeBy: count
+		sourceColumn: machine_id
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column site_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 4c2bbda6-d12d-4c1b-aef0-29900f8c6bc3
+		sourceLineageTag: site_id
+		summarizeBy: count
+		sourceColumn: site_id
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column date_hour
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f45683d3-d32d-413f-ba24-deb25b95f3fc
+		sourceLineageTag: date_hour
+		summarizeBy: none
+		sourceColumn: date_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column Availability
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 8ab173b0-af7f-4712-ba40-bdce95120e71
+		sourceLineageTag: Availability
+		summarizeBy: sum
+		sourceColumn: Availability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actual_output
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 879a84ba-efd5-4a71-9a9a-0a797185ef46
+		sourceLineageTag: actual_output
+		summarizeBy: sum
+		sourceColumn: actual_output
+
+		annotation SummarizationSetBy = Automatic
+
+	column sum_cycle_time_in_seconds
+		dataType: double
+		sourceProviderType: float
+		lineageTag: eefe3fb1-77db-47ca-b9aa-6e6f81307cff
+		sourceLineageTag: sum_cycle_time_in_seconds
+		summarizeBy: sum
+		sourceColumn: sum_cycle_time_in_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Total_Products
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: c876ab50-5f36-4952-8985-e240ee766c3a
+		sourceLineageTag: Total_Products
+		summarizeBy: sum
+		sourceColumn: Total_Products
+
+		annotation SummarizationSetBy = Automatic
+
+	column Good_Products
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 2fae3b4d-1359-4191-8230-7a09c7b8c184
+		sourceLineageTag: Good_Products
+		summarizeBy: sum
+		sourceColumn: Good_Products
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quality
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 82fc30cd-9fc6-4e94-8afb-58d796a5df8f
+		sourceLineageTag: Quality
+		summarizeBy: average
+		sourceColumn: Quality
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ideal_cycle_time
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 68a52151-8e8d-4035-82aa-503078ea541c
+		sourceLineageTag: ideal_cycle_time
+		summarizeBy: sum
+		sourceColumn: ideal_cycle_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column ideal_output
+		dataType: double
+		formatString: 0
+		sourceProviderType: float
+		lineageTag: 886bf752-d9cf-4fa5-a930-eecfe89a7972
+		sourceLineageTag: ideal_output
+		summarizeBy: sum
+		sourceColumn: ideal_output
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Performance
+		dataType: double
+		sourceProviderType: float
+		lineageTag: f2799775-2137-4b9e-9a97-a82fa9e4db2a
+		sourceLineageTag: Performance
+		summarizeBy: average
+		sourceColumn: Performance
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OEE
+		dataType: double
+		sourceProviderType: float
+		lineageTag: f68db915-ec96-44c8-ba10-c29a13171c67
+		sourceLineageTag: OEE
+		summarizeBy: average
+		sourceColumn: OEE
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition oee = entity
+		mode: directLake
+		source
+			entityName: oee
+			schemaName: dbo
+			expressionSource: 'DirectLake - ManufacturingData'
+

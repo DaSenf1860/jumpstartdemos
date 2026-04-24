@@ -1,0 +1,175 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "3b486e6e99140b7a7441",
+  "position": {
+    "x": 490.06693440428376,
+    "y": 489.21017402945114,
+    "z": 11000,
+    "height": 217.61713520749666,
+    "width": 779.65194109772415,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date"
+                    }
+                  },
+                  "Property": "date_id"
+                }
+              },
+              "queryRef": "dim_date.date_id",
+              "nativeQueryRef": "date_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "machines"
+                    }
+                  },
+                  "Property": "machinename"
+                }
+              },
+              "queryRef": "machines.machinename",
+              "nativeQueryRef": "machinename"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "oee"
+                        }
+                      },
+                      "Property": "ideal_output"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(oee.ideal_output)",
+              "nativeQueryRef": "Sum of ideal_output"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "oee"
+                        }
+                      },
+                      "Property": "Total_Products"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(oee.Total_Products)",
+              "nativeQueryRef": "Sum of Total_Products"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "oee"
+                        }
+                      },
+                      "Property": "Good_Products"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(oee.Good_Products)",
+              "nativeQueryRef": "Sum of Good_Products"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Average Availability"
+                }
+              },
+              "queryRef": "oee.Average Availability",
+              "nativeQueryRef": "Average Availability"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "oee"
+                      }
+                    },
+                    "Property": "ideal_output"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,98 @@
+table sites
+	lineageTag: 078e7dae-31d7-41cf-a307-a4773fb08e9b
+	sourceLineageTag: [masterdata].[sites]
+
+	column siteid
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: f9fcf271-e64a-499b-91b1-6534dfbb5a8d
+		sourceLineageTag: siteid
+		summarizeBy: none
+		sourceColumn: siteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sitename
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 3275619c-5478-4060-8519-f957a3f730f3
+		sourceLineageTag: sitename
+		summarizeBy: none
+		sourceColumn: sitename
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 9ccf5868-ad08-41b9-9955-311cb14ab94f
+		sourceLineageTag: city
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8c4207ae-e9cf-4b08-ad69-3fdb4e133c5d
+		sourceLineageTag: country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 6cfabb40-f0f6-48fc-a7d1-e851b240dc03
+		sourceLineageTag: capacity
+		summarizeBy: none
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column establishedyear
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8229aa9b-ce91-4db0-9d82-ea443cf94e68
+		sourceLineageTag: establishedyear
+		summarizeBy: none
+		sourceColumn: establishedyear
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 0f267322-cef6-4558-a1ad-1751b0f1a557
+		sourceLineageTag: latitude
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 7cc571e8-6c8b-4faf-96fd-9f52694ba1f7
+		sourceLineageTag: longitude
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition sites = entity
+		mode: directLake
+		source
+			entityName: sites
+			schemaName: masterdata
+			expressionSource: 'DirectLake - ManufacturingData'
+

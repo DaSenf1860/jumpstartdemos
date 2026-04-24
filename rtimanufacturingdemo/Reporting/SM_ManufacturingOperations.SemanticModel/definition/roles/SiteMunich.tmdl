@@ -1,0 +1,7 @@
+role SiteMunich
+	modelPermission: read
+
+	tablePermission sites = [sitename] == "Munich"
+
+	annotation PBI_Id = 27514c347fae4871ab70238a72448960
+

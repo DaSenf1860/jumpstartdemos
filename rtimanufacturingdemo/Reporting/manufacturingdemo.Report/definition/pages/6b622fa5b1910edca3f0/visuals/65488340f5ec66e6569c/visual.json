@@ -1,0 +1,105 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "65488340f5ec66e6569c",
+  "position": {
+    "x": 21.465942672470266,
+    "y": 120.44778943997204,
+    "z": 5000,
+    "height": 138.33607500036393,
+    "width": 246.85834073340806,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "kpi",
+    "query": {
+      "queryState": {
+        "Goal": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Goal_OEE"
+                }
+              },
+              "queryRef": "oee.Goal_OEE",
+              "nativeQueryRef": "Goal_OEE"
+            }
+          ]
+        },
+        "Indicator": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Average OEE"
+                }
+              },
+              "queryRef": "oee.Average OEE",
+              "nativeQueryRef": "Average OEE"
+            }
+          ]
+        },
+        "TrendLine": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date"
+                    }
+                  },
+                  "Property": "date_id"
+                }
+              },
+              "queryRef": "dim_date.date_id",
+              "nativeQueryRef": "date_id"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'OEE'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

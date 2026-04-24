@@ -1,0 +1,28 @@
+[
+  {
+    "name": "sensors_parsed",
+    "path": "/Tables/machinedata",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/sensors_parsed",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "KustoDatabase"
+      }
+    }
+  },
+  {
+    "name": "production_quality",
+    "path": "/Tables/machinedata",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/production_quality",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "KustoDatabase"
+      }
+    }
+  }
+]

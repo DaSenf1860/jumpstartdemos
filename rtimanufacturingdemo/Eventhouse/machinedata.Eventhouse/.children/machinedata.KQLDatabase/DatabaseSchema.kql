@@ -1,0 +1,79 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table machineraw (machine_id:string, site_id:string, sensors:dynamic) 
+.create-or-alter table machineraw ingestion json mapping 'machineraw_mapping'
+```
+[{"Properties":{"Path":"$['machine_id']"},"column":"machine_id","datatype":""},{"Properties":{"Path":"$['site_id']"},"column":"site_id","datatype":""},{"Properties":{"Path":"$['sensors']"},"column":"sensors","datatype":""}]
+```
+.create-or-alter table machineraw ingestion json mapping 'machineraw_mapping_1'
+```
+[{"Properties":{"Path":"$['machine_id']"},"column":"machine_id","datatype":""},{"Properties":{"Path":"$['site_id']"},"column":"site_id","datatype":""},{"Properties":{"Path":"$['sensors']"},"column":"sensors","datatype":""}]
+```
+.create-or-alter table machineraw ingestion json mapping 'machineraw_mapping_2'
+```
+[{"Properties":{"Path":"$['machine_id']"},"column":"machine_id","datatype":""},{"Properties":{"Path":"$['site_id']"},"column":"site_id","datatype":""},{"Properties":{"Path":"$['sensors']"},"column":"sensors","datatype":""}]
+```
+.create-merge table mqttdataraw (specversion:real, source:string, subject:string, type:string, id:guid, datacontenttype:string, ['time']:datetime, data_base64:string) 
+.create-or-alter table mqttdataraw ingestion json mapping 'mqttdataraw_mapping'
+```
+[{"Properties":{"Path":"$['specversion']"},"column":"specversion","datatype":""},{"Properties":{"Path":"$['source']"},"column":"source","datatype":""},{"Properties":{"Path":"$['subject']"},"column":"subject","datatype":""},{"Properties":{"Path":"$['type']"},"column":"type","datatype":""},{"Properties":{"Path":"$['id']"},"column":"id","datatype":""},{"Properties":{"Path":"$['datacontenttype']"},"column":"datacontenttype","datatype":""},{"Properties":{"Path":"$['time']"},"column":"time","datatype":""},{"Properties":{"Path":"$['data_base64']"},"column":"data_base64","datatype":""}]
+```
+.create-merge table sites_internal (siteid:int, sitename:string, city:string, country:string, capacity:int, establishedyear:int, latitude:real, longitude:real) 
+.create-merge table sensors_parsed (machine_id:int, site_id:int, sensor_id:string, sensor_type:string, measure_unit:string, sensor_value:decimal, timestamp:datetime, Date:string, Time:string) 
+.create-merge table production_quality (product_id:int, batch_id:string, machine_id:int, production_line:string, Date:string, Time:string, timestamp:datetime, cycle_time_seconds:real, operator_id:string, site_id:int, first_pass_yield:int, rework_required:int, dimensional_check:int, surface_quality:int, electrical_test:int, performance_test:int, defect_count:int, inspection_count:int, pass_rate_percentage:real) 
+.create-merge table ForecastedMetrics (machine_id:int, site_id:int, deviation:decimal, forecast_timestamp:datetime, Performance:real, Forecast_Performance:real, Availability:real, Forecast_Availability:real) 
+.create-merge table machines_internal (machineid:int, machinename:string, siteid:int, machinetypeid:int, manufacturerid:int, status:string, manufactureyear:int, hourlycapacity:real, operator:string, sitename:string, city:string, country:string, capacity:long, establishedyear:long, latitude:real, longitude:real) 
+.create-or-alter function with (folder = "Demo", docstring = "Availability", skipvalidation = "true", view = true) Availability() {
+    let production_start = ago(10m);
+
+production_quality
+| where timestamp > production_start
+| extend timebin10s = bin(timestamp, 10s)
+| summarize by machine_id, site_id, timebin10s
+| summarize Uptime_in_sec = 10*count(timebin10s), min(timebin10s), max(timebin10s) by machine_id, site_id
+| extend production_start = production_start
+| extend Planned_Production_Time_in_sec = datetime_diff('second', now(), production_start)
+| extend Availability = min_of(100.0, round(todecimal(100*Uptime_in_sec)/Planned_Production_Time_in_sec,2))
+}
+.create-or-alter function with (folder = "Demo", docstring = "Performance", skipvalidation = "true", view = true) Performance() {
+    let production_start = ago(10m);
+let ideal_cycle_time = 4;
+
+production_quality
+| where timestamp > production_start
+| extend machine_id = toint(machine_id)
+| extend site_id = toint(site_id)
+| summarize Actual_Output = count(product_id), sum_cycle_time_in_seconds = sum(cycle_time_seconds), max(timestamp) by machine_id, site_id
+| extend Ideal_Output = max_of(sum_cycle_time_in_seconds/ideal_cycle_time, 0.000000001)
+| extend Performance = min_of(100.0, round(100*Actual_Output/Ideal_Output, 2))
+}
+.create-or-alter function with (folder = "Demo", docstring = "Quality", skipvalidation = "true", view = true) Quality() {
+    let production_start = ago(10m);
+
+production_quality
+| where timestamp > production_start
+| extend machine_id = toint(machine_id)
+| extend site_id = toint(site_id)
+| summarize Good_Products=sum(first_pass_yield), Total_Products=count(product_id) by machine_id, site_id
+| extend Quality = min_of(100.0, round(100*Good_Products/Total_Products, 2))
+}
+.create-or-alter function with (skipvalidation = "true") ForecastedMetricsFunction() {
+    sensors_parsed
+| where timestamp > ago(10m) and sensor_type == 'temperature'
+| summarize max(sensor_value) by machine_id, site_id, sensor_id
+| extend deviation = (max_of(50, max_sensor_value) - 50)*0.0125
+| extend forecast_timestamp = ago(-1h)
+| lookup Performance() on machine_id
+| extend Forecast_Performance = round(Performance*(1 - toreal(deviation)), 0)
+| lookup Availability() on machine_id
+| extend Forecast_Availability = round(Availability*(1 - toreal(deviation)), 0)
+| lookup machines_internal on $left.machine_id==$right.machineid
+| lookup sites_internal on $left.site_id==$right.siteid
+| project machinename, sitename, deviation, forecast_timestamp, Performance, Forecast_Performance, Availability, Forecast_Availability
+}
+.create-or-alter materialized-view  PerformanceAvailability_MV on table production_quality { latestperformanceavailability() 
+    | summarize arg_max(timestamp, Performance, Availability) by machine_id, site_id }
+.alter table sensors_parsed policy update "[{\"IsEnabled\":true,\"Source\":\"machineraw\",\"Query\":\"machineraw | extend parsed = parse_json(sensors) | mv-expand entries = parsed | extend sensor_id = tostring(bag_keys(entries)[0]), sensor_info = entries[tostring(bag_keys(entries)[0])] | extend sensor_type = tostring(sensor_info.sensor_type), measure_unit = tostring(sensor_info.measure_unit), sensor_value = todecimal(sensor_info.sensor_values.value), timestamp = todatetime(sensor_info.sensor_values.timestamp), Date = format_datetime(todatetime(sensor_info.sensor_values.timestamp), \'yyyy-MM-dd\'), Time = format_datetime(todatetime(sensor_info.sensor_values.timestamp), \'HH:mm:ss\'), sensor_id_clean = replace_string(sensor_id, \\\"_\\\", \\\"\\\"), site_id = toint(site_id), machine_id = toint(machine_id) | project machine_id, site_id, sensor_id, sensor_type, measure_unit, sensor_value, timestamp, Date, Time\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table production_quality policy update "[{\"IsEnabled\":true,\"Source\":\"mqttdataraw\",\"Query\":\"mqttdataraw | project message = base64_decode_tostring(data_base64) | project ParsedMessage = parse_json(message) | extend product_id = toint(ParsedMessage[\\\"product_id\\\"]), batch_id = tostring(ParsedMessage[\\\"batch_id\\\"]), machine_id = toint(ParsedMessage[\\\"machine_id\\\"]), production_line = tostring(ParsedMessage[\\\"production_line\\\"]), timestamp = todatetime(ParsedMessage[\\\"timestamp\\\"]), cycle_time_seconds = todouble(ParsedMessage[\\\"cycle_time_seconds\\\"]), first_pass_yield = toint(iif(tobool(ParsedMessage[\\\"first_pass_yield\\\"]), 1, 0)), rework_required = toint(iif(tobool(ParsedMessage[\\\"rework_required\\\"]), 1, 0)), operator_id = tostring(ParsedMessage[\\\"operator_id\\\"]), site_id = toint(ParsedMessage[\\\"site_id\\\"]), dimensional_check = toint(iif(tolower(tostring(ParsedMessage[\\\"test_results\\\"][\\\"dimensional_check\\\"])) == \\\"pass\\\", 1, 0)), surface_quality = toint(iif(tolower(tostring(ParsedMessage[\\\"test_results\\\"][\\\"surface_quality\\\"])) == \\\"pass\\\", 1, 0)), electrical_test = toint(iif(tolower(tostring(ParsedMessage[\\\"test_results\\\"][\\\"electrical_test\\\"])) == \\\"pass\\\", 1, 0)), performance_test = toint(iif(tolower(tostring(ParsedMessage[\\\"test_results\\\"][\\\"performance_test\\\"])) == \\\"pass\\\", 1, 0)), defect_count = toint(ParsedMessage[\\\"quality_metrics\\\"][\\\"defect_count\\\"]), inspection_count = toint(ParsedMessage[\\\"quality_metrics\\\"][\\\"inspection_count\\\"]), pass_rate_percentage = todouble(ParsedMessage[\\\"quality_metrics\\\"][\\\"pass_rate_percentage\\\"]) | extend Date = format_datetime(timestamp, \\\"yyyy-MM-dd\\\"), Time = format_datetime(timestamp, \\\"HH:mm:ss\\\") | project product_id, batch_id, machine_id, production_line, Date, Time, timestamp, cycle_time_seconds, operator_id, site_id, first_pass_yield, rework_required, dimensional_check, surface_quality, electrical_test, performance_test, defect_count, inspection_count, pass_rate_percentage\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

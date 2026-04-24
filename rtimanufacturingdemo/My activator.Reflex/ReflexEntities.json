@@ -1,0 +1,500 @@
+[
+  {
+    "uniqueIdentifier": "c893e480-00bd-47c8-96ba-880bf46360dd",
+    "payload": {
+      "name": "Action",
+      "parameters": []
+    },
+    "type": "powerAutomateFlowAction-v1"
+  },
+  {
+    "uniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6",
+    "payload": {
+      "name": "machinedata",
+      "description": "Container Description",
+      "type": "kqlQueries"
+    },
+    "type": "container-v1"
+  },
+  {
+    "uniqueIdentifier": "c9fab5cb-9fbc-4a66-aa7d-49cf13f88892",
+    "payload": {
+      "name": "machinedata event",
+      "runSettings": {
+        "executionIntervalInSeconds": 60
+      },
+      "query": {
+        "queryString": "ForecastedMetricsFunction()"
+      },
+      "eventhouseItem": {
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "KustoDatabase"
+      },
+      "queryParameters": [],
+      "metadata": {
+        "workspaceId": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
+        "querySetId": "d50af31d-cdfc-44b9-95c3-892f1923f0a8",
+        "queryId": "284f7634-80ac-4e7c-8b5e-357825cb9aae"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      }
+    },
+    "type": "kqlSource-v1"
+  },
+  {
+    "uniqueIdentifier": "6ad414c4-c490-4ce7-a5d6-beacc99db144",
+    "payload": {
+      "name": "machinedata event",
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"d3e04852-0d2e-4cde-9901-ddc3d39259f6\",\"name\":\"SourceEventStep\",\"rows\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c9fab5cb-9fbc-4a66-aa7d-49cf13f88892\"}],\"kind\":\"SourceReference\",\"name\":\"SourceSelector\"}]}],\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab",
+    "payload": {
+      "name": "machine",
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Object"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "e209bfcb-f10c-41ec-8986-631ec687fc7c",
+    "payload": {
+      "name": "machinename",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"3d915446-45e7-46de-956a-09c00ea1cbaf\",\"name\":\"IdPartStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"IdentityPartAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "d360323b-a4a8-4d43-8b35-6f12c68949d6",
+    "payload": {
+      "name": "machinename",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"95edbac5-2caa-47d7-8576-c632a3a4551f\",\"name\":\"IdStructureStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"e209bfcb-f10c-41ec-8986-631ec687fc7c\"}],\"kind\":\"AttributeReference\",\"name\":\"idPart\",\"type\":\"complex\"}],\"kind\":\"IdPart\",\"name\":\"IdPart\"}]}],\"templateId\":\"IdentityTupleAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "6064a208-94f5-46e8-91ec-a15e300d433f",
+    "payload": {
+      "name": "machinedata event",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"1400f734-1b15-4469-ada8-fc4d3377e454\",\"name\":\"SplitEventStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6ad414c4-c490-4ce7-a5d6-beacc99db144\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"machinename\"},{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"e209bfcb-f10c-41ec-8986-631ec687fc7c\"}],\"kind\":\"AttributeReference\",\"name\":\"idPart\",\"type\":\"complex\"}],\"kind\":\"FieldIdMapping\",\"name\":\"FieldIdMapping\"},{\"arguments\":[{\"name\":\"isAuthoritative\",\"type\":\"boolean\",\"value\":true}],\"kind\":\"EventOptions\",\"name\":\"SplitEventOptions\"}]}],\"templateId\":\"SplitEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "d7eb1ac7-de1f-4518-ab33-44295541735a",
+    "payload": {
+      "name": "Forecast_Availability",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"ca58bc8b-7874-45a8-879f-df9544d700de\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6064a208-94f5-46e8-91ec-a15e300d433f\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Forecast_Availability\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"a3d72943-0c94-48a4-8482-d3d28dbdc057\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "a0dff2a8-cdc7-4c53-928a-232330e162b6",
+    "payload": {
+      "name": "Forecast_Performance",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"cfdf4883-03d8-4f23-9989-2a151d393f3d\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6064a208-94f5-46e8-91ec-a15e300d433f\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Forecast_Performance\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"1add931a-feb4-40ca-8e75-c1ee5ac6224b\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "3bb2910f-b692-419e-b64f-7b58ef5d83b8",
+    "payload": {
+      "name": "forecast_timestamp",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"12cb118f-ff11-4244-979c-c332937db207\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6064a208-94f5-46e8-91ec-a15e300d433f\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"forecast_timestamp\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"ae80c5f3-d662-4165-b8aa-21df2362af05\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "a62fe0f3-de93-40a1-b547-65531bcde0e2",
+    "payload": {
+      "name": "sitename",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"145fadd5-92fd-4a93-b210-0e1b4f78e998\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6064a208-94f5-46e8-91ec-a15e300d433f\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"sitename\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"7a659649-40e1-44cc-918a-0a631f0782d5\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "6b8a51bc-c86b-40bb-940f-e99e2ed85d23",
+    "payload": {
+      "name": "machinedata event alert",
+      "parentObject": {
+        "targetUniqueIdentifier": "c461568d-98f1-4934-8a54-d819f68620ab"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\",\"steps\":[{\"name\":\"FieldsDefaultsStep\",\"id\":\"05a255f4-3b46-4ccf-91e3-8e31b06b0091\",\"rows\":[{\"name\":\"EventSelector\",\"kind\":\"Event\",\"arguments\":[{\"kind\":\"EventReference\",\"type\":\"complex\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6064a208-94f5-46e8-91ec-a15e300d433f\"}],\"name\":\"event\"}]}]},{\"name\":\"EventDetectStep\",\"id\":\"9289fa50-4d92-4da7-acb8-4821d5f509ad\",\"rows\":[{\"name\":\"EventFieldSelector\",\"kind\":\"EventField\",\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Forecast_Availability\"}]},{\"name\":\"NumberValueCondition\",\"kind\":\"NumberValueCondition\",\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsLessThan\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":90.0}]}]},{\"name\":\"ActStep\",\"id\":\"561151ce-3dcc-44e4-a2ab-8da19abc0459\",\"rows\":[{\"name\":\"FabricItemBinding\",\"kind\":\"FabricItemInvocation\",\"arguments\":[{\"name\":\"fabricJobConnectionDocumentId\",\"type\":\"string\",\"value\":\"54a21c5a-77ea-420e-bb09-f88736869940\"},{\"name\":\"parameters\",\"type\":\"array\",\"values\":[{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"machinename\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"EventFieldReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"machinename\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"timestamp\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"3bb2910f-b692-419e-b64f-7b58ef5d83b8\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"Availability\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"d7eb1ac7-de1f-4518-ab33-44295541735a\"}]},{\"type\":\"string\",\"value\":\"  \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"Performance\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"a0dff2a8-cdc7-4c53-928a-232330e162b6\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]},{\"name\":\"workspaceId\",\"type\":\"string\",\"value\":\"00000000-0000-0000-0000-000000000000\"},{\"name\":\"itemId\",\"type\":\"string\",\"value\":\"e6da1a86-e8be-b382-4bee-c638397ccb9e\"},{\"name\":\"itemType\",\"type\":\"string\",\"value\":\"UserDataFunctions\"},{\"name\":\"jobType\",\"type\":\"string\",\"value\":\"Execute\"},{\"name\":\"subitemId\",\"type\":\"string\",\"value\":\"trigger_forecast_warning\"}]}]}]}",
+        "settings": {
+          "shouldRun": true,
+          "shouldApplyRuleOnUpdate": true
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1",
+    "payload": {
+      "name": "machinedata",
+      "description": "Container Description",
+      "type": "kqlQueries"
+    },
+    "type": "container-v1"
+  },
+  {
+    "uniqueIdentifier": "5df4290b-81fd-4c41-886c-33cd82bf5c1d",
+    "payload": {
+      "name": "machinedata event",
+      "runSettings": {
+        "executionIntervalInSeconds": 60
+      },
+      "query": {
+        "queryString": "Availability()\n| lookup Performance() on machine_id, site_id\n| lookup Quality() on machine_id, site_id\n| project machine_id, site_id, Availability, Performance, Quality\n| lookup machines_internal on $left.machine_id == $right.machineid\n| project machinename, sitename, Availability, Performance, Quality, operator\n| extend OEE = round((Availability*Performance*Quality)/10000,0)"
+      },
+      "eventhouseItem": {
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "KustoDatabase"
+      },
+      "queryParameters": [],
+      "metadata": {
+        "workspaceId": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
+        "querySetId": "d50af31d-cdfc-44b9-95c3-892f1923f0a8",
+        "queryId": "284f7634-80ac-4e7c-8b5e-357825cb9aae"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      }
+    },
+    "type": "kqlSource-v1"
+  },
+  {
+    "uniqueIdentifier": "68ef875e-194b-481e-b730-8d38c6dbdba4",
+    "payload": {
+      "name": "machinedata event",
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"31b9d164-8546-4c54-ac2b-df70f03be0c8\",\"name\":\"SourceEventStep\",\"rows\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"5df4290b-81fd-4c41-886c-33cd82bf5c1d\"}],\"kind\":\"SourceReference\",\"name\":\"SourceSelector\"}]}],\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210",
+    "payload": {
+      "name": "machine",
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Object"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "e310ba1b-7a7f-4d9f-a8a8-4e38820c9d49",
+    "payload": {
+      "name": "machinename",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"06f46814-0cfb-4520-8195-db37b6e91b77\",\"name\":\"IdPartStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"IdentityPartAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "59109081-0ada-4943-9743-ce4268679f7f",
+    "payload": {
+      "name": "machinename",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"f58026d7-879c-4a29-9bcf-d57630c63055\",\"name\":\"IdStructureStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"e310ba1b-7a7f-4d9f-a8a8-4e38820c9d49\"}],\"kind\":\"AttributeReference\",\"name\":\"idPart\",\"type\":\"complex\"}],\"kind\":\"IdPart\",\"name\":\"IdPart\"}]}],\"templateId\":\"IdentityTupleAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "c8f9d8fb-1dd7-4afd-b15d-d4b69821474b",
+    "payload": {
+      "name": "machinedata event",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"091c317c-23e6-4c68-b14e-983080825db0\",\"name\":\"SplitEventStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"68ef875e-194b-481e-b730-8d38c6dbdba4\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"machinename\"},{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"e310ba1b-7a7f-4d9f-a8a8-4e38820c9d49\"}],\"kind\":\"AttributeReference\",\"name\":\"idPart\",\"type\":\"complex\"}],\"kind\":\"FieldIdMapping\",\"name\":\"FieldIdMapping\"},{\"arguments\":[{\"name\":\"isAuthoritative\",\"type\":\"boolean\",\"value\":true}],\"kind\":\"EventOptions\",\"name\":\"SplitEventOptions\"}]}],\"templateId\":\"SplitEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "9fab6ea1-e029-4f02-ab6c-ad1b0cc67bf6",
+    "payload": {
+      "name": "Availability",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"f9b32aed-4f27-4be6-b7c7-d3538afa0fa7\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Availability\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"1707fe35-14df-4241-8459-5c8bee7a26eb\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "bad4a078-cbc6-4674-a094-10a59a98ef9c",
+    "payload": {
+      "name": "OEE",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"80de4efc-d262-4caa-a6a7-d0370043a811\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"OEE\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"aeb540aa-d275-4f20-8704-ed2bcdd83839\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "2493c1b1-39a2-43d1-a763-8d0a88a0da1d",
+    "payload": {
+      "name": "Performance",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"902c833f-c91e-4470-96d5-1642e5ad06da\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Performance\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"1bb17dfa-b9f2-4db6-8e22-150253efd6ea\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "f1636362-0e79-41da-8ec1-5f3bd63c140a",
+    "payload": {
+      "name": "Quality",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"8fc5ef66-c45b-4938-be42-9f396105afd8\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"Quality\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"130a00c9-b624-4591-aa4f-5236b9a79a29\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Number\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "f58d98b3-747c-49ac-a5b5-02e419717608",
+    "payload": {
+      "name": "operator",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"49f360b1-cdd8-41cd-ab48-7e0216d853ed\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"operator\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"a2bd5653-ea52-4d71-94df-9a962c8cf6ae\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "8138be76-b02d-4902-97ba-8b306c72ae57",
+    "payload": {
+      "name": "sitename",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Attribute",
+        "instance": "{\"steps\":[{\"id\":\"0506611e-9196-4c40-bc9f-6aa0f425abfb\",\"name\":\"EventSelectStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"sitename\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"}]},{\"id\":\"e12c7a9e-b3b9-488e-b75c-774a0a90fafb\",\"name\":\"EventComputeStep\",\"rows\":[{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"Text\"},{\"name\":\"format\",\"type\":\"string\",\"value\":\"\"}],\"kind\":\"TypeAssertion\",\"name\":\"TypeAssertion\"}]}],\"templateId\":\"BasicEventAttribute\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "4c8579cc-43f3-44e0-be18-f13908e2945c",
+    "payload": {
+      "name": "machinedata event alert",
+      "parentObject": {
+        "targetUniqueIdentifier": "f3950f36-ceeb-4cf3-b8a1-2689dd73b210"
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      },
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\",\"steps\":[{\"name\":\"FieldsDefaultsStep\",\"id\":\"94c64c2b-850e-4391-a60c-96ab30edd24b\",\"rows\":[{\"name\":\"EventSelector\",\"kind\":\"Event\",\"arguments\":[{\"kind\":\"EventReference\",\"type\":\"complex\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"c8f9d8fb-1dd7-4afd-b15d-d4b69821474b\"}],\"name\":\"event\"}]}]},{\"name\":\"EventDetectStep\",\"id\":\"d3260fb2-1b6a-4c81-9967-8c7f299bf145\",\"rows\":[{\"name\":\"OnEveryValue\",\"kind\":\"OnEveryValue\",\"arguments\":[]}]},{\"name\":\"DimensionalFilterStep\",\"id\":\"b0506c9d-c3a8-490a-b729-90a3db594633\",\"rows\":[{\"name\":\"AttributeSelector\",\"kind\":\"Attribute\",\"arguments\":[{\"kind\":\"AttributeReference\",\"type\":\"complex\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"bad4a078-cbc6-4674-a094-10a59a98ef9c\"}],\"name\":\"attribute\"}]},{\"name\":\"NumberValueCondition\",\"kind\":\"NumberValueCondition\",\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsLessThan\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":50.0}]}]},{\"name\":\"ActStep\",\"id\":\"520be0e3-1af6-4815-ab64-6fa428de3cf2\",\"rows\":[{\"name\":\"FabricItemBinding\",\"kind\":\"FabricItemInvocation\",\"arguments\":[{\"name\":\"fabricJobConnectionDocumentId\",\"type\":\"string\",\"value\":\"617bf453-9fe7-422e-8253-cf0048ad1272\"},{\"name\":\"parameters\",\"type\":\"array\",\"values\":[{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"typeofrequest\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"maintenance\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"machinename\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"EventFieldReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"machinename\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"OEE\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"bad4a078-cbc6-4674-a094-10a59a98ef9c\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"Availability\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"9fab6ea1-e029-4f02-ab6c-ad1b0cc67bf6\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"Performance\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"2493c1b1-39a2-43d1-a763-8d0a88a0da1d\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]},{\"kind\":\"FabricItemParameter\",\"type\":\"complex\",\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"Quality\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"type\":\"string\",\"value\":\"​\"},{\"kind\":\"AttributeReference\",\"type\":\"complexReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"f1636362-0e79-41da-8ec1-5f3bd63c140a\"}]},{\"type\":\"string\",\"value\":\" \"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}]}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]},{\"name\":\"workspaceId\",\"type\":\"string\",\"value\":\"00000000-0000-0000-0000-000000000000\"},{\"name\":\"itemId\",\"type\":\"string\",\"value\":\"e6da1a86-e8be-b382-4bee-c638397ccb9e\"},{\"name\":\"itemType\",\"type\":\"string\",\"value\":\"UserDataFunctions\"},{\"name\":\"jobType\",\"type\":\"string\",\"value\":\"Execute\"},{\"name\":\"subitemId\",\"type\":\"string\",\"value\":\"trigger_workflow\"}]}]}]}",
+        "settings": {
+          "shouldRun": true,
+          "shouldApplyRuleOnUpdate": true
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "617bf453-9fe7-422e-8253-cf0048ad1272",
+    "payload": {
+      "name": "Fabric item action",
+      "fabricItem": {
+        "itemId": "e6da1a86-e8be-b382-4bee-c638397ccb9e",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "FunctionSet"
+      },
+      "jobType": "Execute",
+      "parentContainer": {
+        "targetUniqueIdentifier": "9b7b24e3-e81e-4278-83a9-aaf400344dc1"
+      }
+    },
+    "type": "fabricItemAction-v1"
+  },
+  {
+    "uniqueIdentifier": "54a21c5a-77ea-420e-bb09-f88736869940",
+    "payload": {
+      "name": "Fabric item action",
+      "fabricItem": {
+        "itemId": "e6da1a86-e8be-b382-4bee-c638397ccb9e",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "FunctionSet"
+      },
+      "jobType": "Execute",
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      }
+    },
+    "type": "fabricItemAction-v1"
+  },
+  {
+    "uniqueIdentifier": "0811d99c-e5e7-4121-b2bc-6bbc4a712b47",
+    "payload": {
+      "name": "machinedata event Warnung",
+      "parentContainer": {
+        "targetUniqueIdentifier": "925585d8-9007-479b-8ad8-788e4b0f57a6"
+      },
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.4\",\"steps\":[{\"name\":\"FieldsDefaultsStep\",\"id\":\"b7fac1d2-ed02-4673-a3d0-d622401edac5\",\"rows\":[{\"name\":\"EventSelector\",\"kind\":\"Event\",\"arguments\":[{\"kind\":\"EventReference\",\"type\":\"complex\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"6ad414c4-c490-4ce7-a5d6-beacc99db144\"}],\"name\":\"event\"}]}]},{\"name\":\"EventDetectStep\",\"id\":\"2383c2cf-45b4-4e83-8212-e72fdd3be148\",\"rows\":[{\"name\":\"OnEveryValue\",\"kind\":\"OnEveryValue\",\"arguments\":[]}]},{\"name\":\"ActStep\",\"id\":\"071f7740-4d97-4119-85ac-586775ab4fdc\",\"rows\":[{\"name\":\"EmailBinding\",\"kind\":\"EmailMessage\",\"arguments\":[{\"name\":\"messageLocale\",\"type\":\"string\",\"value\":\"en-us\"},{\"name\":\"sentTo\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"amya@D365DemoTSCE69365762.OnMicrosoft.com\"}]},{\"name\":\"copyTo\",\"type\":\"array\",\"values\":[]},{\"name\":\"bCCTo\",\"type\":\"array\",\"values\":[]},{\"name\":\"subject\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"Activator-Warnung machinedata event Warnung\"}]},{\"name\":\"headline\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"Die Bedingung für \\\"machinedata event Warnung\\\" wurde erfüllt.\"}]},{\"name\":\"optionalMessage\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"\"}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]}]}]}]}",
+        "settings": {
+          "shouldRun": false,
+          "shouldApplyRuleOnUpdate": false
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  }
+]

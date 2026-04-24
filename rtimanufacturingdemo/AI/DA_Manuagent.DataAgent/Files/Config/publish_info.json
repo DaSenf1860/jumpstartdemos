@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "This agent can answer questions on quality data like OEE, Availability, Quality and Performance of machines and site as well as questions on sensor data like temperature, vibration or pressure of machines.\nFor latest and most recent data it queries a KQL database, for historical analysis it uses a lakehouse"
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "a1d4640a26d7ebaa23d2",
+  "position": {
+    "x": 21.4190093708166,
+    "y": 489.21017402945114,
+    "z": 9000,
+    "height": 217.61713520749666,
+    "width": 440.37483266398925,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "machines"
+                        }
+                      },
+                      "Hierarchy": "sitename Hierarchy"
+                    }
+                  },
+                  "Level": "sitename"
+                }
+              },
+              "queryRef": "machines.sitename Hierarchy.sitename",
+              "nativeQueryRef": "sitename Hierarchy sitename",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "machines"
+                        }
+                      },
+                      "Hierarchy": "sitename Hierarchy"
+                    }
+                  },
+                  "Level": "machinename"
+                }
+              },
+              "queryRef": "machines.sitename Hierarchy.machinename",
+              "nativeQueryRef": "sitename Hierarchy machinename",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Average OEE"
+                }
+              },
+              "queryRef": "oee.Average OEE",
+              "nativeQueryRef": "Average OEE"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "oee"
+                  }
+                },
+                "Property": "Average OEE"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

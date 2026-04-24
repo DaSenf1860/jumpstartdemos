@@ -1,0 +1,897 @@
+{
+  "schema_version": 68,
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "1s",
+    "minInterval": "1s"
+  },
+  "tiles": [
+    {
+      "id": "e0f5226f-e9d7-4024-b683-05406b4f3849",
+      "title": "Cycle Times",
+      "visualType": "line",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 14,
+        "y": 12,
+        "width": 10,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c0ec2918-d227-4bf2-bbec-8a97268fa6b2"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "timestamp",
+        "yColumns": [
+          "cycle_time_seconds"
+        ],
+        "seriesColumns": [
+          "production_line"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "0571dc48-c5b7-4fe6-8c24-2a164a9d2d8b",
+      "title": "FPY and Quality Checks LINE 1",
+      "visualType": "line",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 0,
+        "y": 12,
+        "width": 14,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3e41ed5e-9c93-4d39-95e4-4a600b86b6cc"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 1,
+            "yAxisMinimumValue": 0,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "TimeBin",
+        "yColumns": [
+          "avg_first_pass_yield",
+          "avg_dimensional_check",
+          "avg_surface_quality",
+          "avg_electrical_test",
+          "avg_performance_test",
+          "avg_pass_rate_percentage"
+        ],
+        "seriesColumns": [
+          "production_line"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "15bed076-e622-471a-9369-0a17a9207fb8",
+      "title": "FPY and Quality Checks LINE 2",
+      "visualType": "line",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 0,
+        "y": 20,
+        "width": 14,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "bdee7e80-ba3f-401f-a5a4-2bbc0eb70e7c"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 1,
+            "yAxisMinimumValue": 0,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "TimeBin",
+        "yColumns": [
+          "avg_first_pass_yield",
+          "avg_dimensional_check",
+          "avg_surface_quality",
+          "avg_electrical_test",
+          "avg_performance_test",
+          "avg_pass_rate_percentage"
+        ],
+        "seriesColumns": [
+          "production_line"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "b9ff5d18-0ac8-4757-a392-867dc003b399",
+      "title": "FPY and Quality Checks LINE 3",
+      "visualType": "line",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 0,
+        "y": 28,
+        "width": 14,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "ac204f9f-4350-49b6-8b41-908c41091b5b"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 1,
+            "yAxisMinimumValue": 0,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "TimeBin",
+        "yColumns": [
+          "avg_first_pass_yield",
+          "avg_dimensional_check",
+          "avg_surface_quality",
+          "avg_electrical_test",
+          "avg_performance_test",
+          "avg_pass_rate_percentage"
+        ],
+        "seriesColumns": [
+          "production_line"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "132895f6-8190-4930-aad5-3d29bdcf4471",
+      "title": "OEE by machine",
+      "visualType": "column",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 0,
+        "y": 5,
+        "width": 24,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "1654b924-b00b-4fef-89e6-13ac641a3109"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": 100,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": [
+              {
+                "id": "f2e0a3d3-21c1-410f-b210-7fd812362b28",
+                "value": 50
+              },
+              {
+                "id": "553f3d00-d80a-4972-bd93-ba0b0cf46cfb",
+                "value": 70
+              }
+            ]
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "machinename",
+        "yColumns": [
+          "Quality",
+          "Performance",
+          "Availability",
+          "OEE"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "seriesColors": {},
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "b7bbe74d-3fc7-4330-8a1d-1f75c0901d19",
+      "title": "OEE by Site",
+      "visualType": "multistat",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 24,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c178c3d7-f7e3-405f-b25d-45fe32d7010d"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "OEE",
+        "colorRulesDisabled": false,
+        "multiStat__displayOrientation": "horizontal",
+        "multiStat__labelColumn": "sitename",
+        "multiStat__slot": {
+          "width": 5,
+          "height": 1
+        },
+        "colorRules": [
+          {
+            "id": "49331613-1dc8-4ddf-9e8b-cdef0439467b",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": ">",
+                "column": "OEE",
+                "values": [
+                  "50"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "yellow",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "multistat"
+          },
+          {
+            "id": "4dc83b2c-ae43-4ba1-8fe2-b0d4467159c1",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": "<=",
+                "column": "OEE",
+                "values": [
+                  "50"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "multistat"
+          },
+          {
+            "id": "2c8fee84-1aa1-4f3a-ab00-81fbcf0cde97",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "cells",
+            "conditions": [
+              {
+                "operator": ">",
+                "column": "OEE",
+                "values": [
+                  "70"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "green",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "multistat"
+          }
+        ]
+      }
+    },
+    {
+      "id": "96a7ca5c-605e-4d59-b237-ab339d7b9180",
+      "title": "Most quality data",
+      "visualType": "table",
+      "pageId": "5c7e8cda-8169-428c-b8e8-05367a2aeb08",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 24,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "33b21bc4-bd5c-413b-b8ff-f04d4aa816f0"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "69033488-84fa-47e4-b925-d1f21ddbad49",
+      "title": "Most recent sensor data",
+      "visualType": "table",
+      "pageId": "5c7e8cda-8169-428c-b8e8-05367a2aeb08",
+      "layout": {
+        "x": 0,
+        "y": 7,
+        "width": 24,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "511b6ccb-26d1-4eaf-a0c0-4447fc0214ea"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "53e4710b-9a59-4c84-b0a4-afcb00286501",
+      "title": "Temperatures",
+      "visualType": "line",
+      "pageId": "29bd575e-d153-4c4b-a103-acab93e78b15",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 23,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "a0c6d1b8-eb6c-4ca3-9b83-d641040045ce"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "timebin",
+        "yColumns": [
+          "min_sensor_value",
+          "max_sensor_value",
+          "avg_sensor_value"
+        ],
+        "seriesColumns": [
+          "machinename"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [
+          {
+            "interaction": "dragX",
+            "property": "timeRange",
+            "parameterId": "69c9f8e1-ca32-48e9-a8d4-6cf66b5ee73f",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "destinationPages": [],
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d4ffd651-294f-4855-bdc2-446a68091ca1",
+      "title": "Pressure",
+      "visualType": "line",
+      "pageId": "29bd575e-d153-4c4b-a103-acab93e78b15",
+      "layout": {
+        "x": 0,
+        "y": 7,
+        "width": 23,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b99a18e7-ff5d-4cb4-b908-104aefd36a35"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "timebin",
+        "yColumns": [
+          "min_sensor_value",
+          "max_sensor_value",
+          "avg_sensor_value"
+        ],
+        "seriesColumns": [
+          "machinename"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [
+          {
+            "interaction": "dragX",
+            "property": "timeRange",
+            "parameterId": "69c9f8e1-ca32-48e9-a8d4-6cf66b5ee73f",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "destinationPages": [],
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ada5f842-90a3-4f6f-b435-001c6a10ac62",
+      "title": "Vibration",
+      "visualType": "line",
+      "pageId": "29bd575e-d153-4c4b-a103-acab93e78b15",
+      "layout": {
+        "x": 0,
+        "y": 14,
+        "width": 23,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3bd5d887-7f93-41fe-9f54-6d4d1be8268a"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "timebin",
+        "yColumns": [
+          "min_sensor_value",
+          "max_sensor_value",
+          "avg_sensor_value"
+        ],
+        "seriesColumns": [
+          "machinename"
+        ],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [
+          {
+            "interaction": "dragX",
+            "property": "timeRange",
+            "parameterId": "69c9f8e1-ca32-48e9-a8d4-6cf66b5ee73f",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [
+          {
+            "destinationPages": [],
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d44cb371-1c65-42b4-bb79-895b1df7f1df",
+      "title": "New Tile",
+      "visualType": "table",
+      "pageId": "38aab2dd-8865-4517-a22e-bfd67cdf136b",
+      "layout": {
+        "x": 14,
+        "y": 19,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "67c45d58-c6ea-4f52-bdce-315848824a69"
+      },
+      "visualOptions": {
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "69c9f8e1-ca32-48e9-a8d4-6cf66b5ee73f",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "2b06e265-321d-489c-836c-6be62e9ec33a",
+      "displayName": "Site Name",
+      "description": "",
+      "variableName": "site_name",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "sitename"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "b8c727b6-47b4-4c9e-b056-4907f51378e0"
+        }
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "20f84367-a834-40bb-8494-456742948d84",
+      "displayName": "Machine Name",
+      "description": "",
+      "variableName": "machine_name",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "machinename"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "db99f7e0-9c29-4fe7-b616-9eee91fc5b00"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "a6591953-5965-42d1-9053-ae56df8a37ec",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+      "name": "machinedata",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "FPY and Cycle Time",
+      "id": "38aab2dd-8865-4517-a22e-bfd67cdf136b"
+    },
+    {
+      "name": "Sensordata",
+      "id": "29bd575e-d153-4c4b-a103-acab93e78b15"
+    },
+    {
+      "name": "Data",
+      "id": "5c7e8cda-8169-428c-b8e8-05367a2aeb08"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Query flattened data (use this to verify the policy is working)\nproduction_quality\n| where timestamp > ago(30min)\n| order by timestamp desc\n| limit 100\n",
+      "id": "c0ec2918-d227-4bf2-bbec-8a97268fa6b2",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Query flattened data (use this to verify the policy is working)\nproduction_quality\n| where timestamp > ago(30m) and production_line == \"LINE-1\"\n| extend TimeBin = bin(timestamp, 1m)\n| extend pass_rate_percentage = pass_rate_percentage/100\n| summarize avg(first_pass_yield), avg(dimensional_check), avg(surface_quality), avg(electrical_test), avg(performance_test), avg(pass_rate_percentage) by TimeBin, production_line\n\n",
+      "id": "3e41ed5e-9c93-4d39-95e4-4a600b86b6cc",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Query flattened data (use this to verify the policy is working)\nproduction_quality\n| where timestamp > ago(30m) and production_line == \"LINE-2\"\n| extend TimeBin = bin(timestamp, 1m)\n| extend pass_rate_percentage = pass_rate_percentage/100\n| summarize avg(first_pass_yield), avg(dimensional_check), avg(surface_quality), avg(electrical_test), avg(performance_test), avg(pass_rate_percentage) by TimeBin, production_line\n\n",
+      "id": "bdee7e80-ba3f-401f-a5a4-2bbc0eb70e7c",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Query flattened data (use this to verify the policy is working)\nproduction_quality\n| where timestamp > ago(30m) and production_line == \"LINE-3\"\n| extend TimeBin = bin(timestamp, 1m)\n| extend pass_rate_percentage = pass_rate_percentage/100\n| summarize avg(first_pass_yield), avg(dimensional_check), avg(surface_quality), avg(electrical_test), avg(performance_test), avg(pass_rate_percentage) by TimeBin, production_line\n\n",
+      "id": "ac204f9f-4350-49b6-8b41-908c41091b5b",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "Availability()\n| lookup Performance() on machine_id, site_id\n| lookup Quality() on machine_id, site_id\n| project machine_id, site_id, Availability, Performance, Quality\n| lookup machines_internal on $left.machine_id == $right.machineid\n| project machinename, sitename, Availability, Performance, Quality\n| where (isempty(['machine_name']) or machinename in (['machine_name'])) and (isempty(['site_name']) or sitename in (['site_name']))\n| extend OEE = round((Availability*Performance*Quality)/10000,0)",
+      "id": "1654b924-b00b-4fef-89e6-13ac641a3109",
+      "usedVariables": [
+        "machine_name",
+        "site_name"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "Availability()\n| lookup Performance() on machine_id, site_id\n| lookup Quality() on machine_id, site_id\n| summarize Availability=avg(Availability), Performance=avg(Performance), Quality=avg(Quality) by site_id\n| project site_id, Availability, Performance, Quality\n| lookup sites_internal on $left.site_id== $right.siteid\n| project sitename, Availability, Performance, Quality\n| where isempty(['site_name']) or sitename in (['site_name'])\n| extend round(OEE = (Availability*Performance*Quality)/10000,0)\n",
+      "id": "c178c3d7-f7e3-405f-b25d-45fe32d7010d",
+      "usedVariables": [
+        "site_name"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "production_quality\n| top 100 by timestamp\n| project timestamp, product_id, batch_id, machine_id, site_id,  cycle_time_seconds, first_pass_yield",
+      "id": "33b21bc4-bd5c-413b-b8ff-f04d4aa816f0",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Please enter your KQL query (Example):\n// <table name>\n// | where <datetime column> between (['_startTime'] .. ['_endTime']) // Time range filtering\n// | take 100\nsensors_parsed\n| top 100 by timestamp\n| project timestamp, machine_id, site_id, sensor_id, sensor_value, measure_unit",
+      "id": "511b6ccb-26d1-4eaf-a0c0-4447fc0214ea",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "sensors_parsed\n| where sensor_type == 'temperature'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, sitename, sensor_type, sensor_id, timebin\n",
+      "id": "a0c6d1b8-eb6c-4ca3-9b83-d641040045ce",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "machine_name",
+        "site_name"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "sensors_parsed\n| where sensor_type == 'pressure'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, site_id, sensor_type, sensor_id, timebin",
+      "id": "b99a18e7-ff5d-4cb4-b908-104aefd36a35",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "machine_name",
+        "site_name"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "sensors_parsed\n| where sensor_type == 'vibration'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, site_id, sensor_type, sensor_id, timebin",
+      "id": "3bd5d887-7f93-41fe-9f54-6d4d1be8268a",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "machine_name",
+        "site_name"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "\nsensors_parsed\n| where timestamp > ago(2d) and sensor_type == 'temperature'\n| summarize max(sensor_value) by machine_id, site_id, sensor_id\n| extend deviation = (max_of(94, max_sensor_value) - 94)*0.025\n| extend forecast_timestamp = ago(-1h)\n| lookup Performance() on machine_id\n| extend Forecast_Performance = Performance*(1 - toreal(deviation))\n| lookup Availability() on machine_id\n| extend Forecast_Availability = Availability*(1 - toreal(deviation))\n| project machine_id, site_id, deviation, forecast_timestamp, Performance, Forecast_Performance, Availability, Forecast_Availability",
+      "id": "67c45d58-c6ea-4f52-bdce-315848824a69",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "// Please enter your KQL query (Example):\n// <table name>\n// | where <datetime column> between (['_startTime'] .. ['_endTime']) // Time range filtering\n// | take 100\nsites_internal\n| project sitename",
+      "id": "b8c727b6-47b4-4c9e-b056-4907f51378e0",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
+      },
+      "text": "machines_internal\n| project machinename",
+      "id": "db99f7e0-9c29-4fe7-b616-9eee91fc5b00",
+      "usedVariables": []
+    }
+  ]
+}

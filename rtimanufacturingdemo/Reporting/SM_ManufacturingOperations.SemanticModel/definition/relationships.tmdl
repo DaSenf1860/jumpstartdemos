@@ -1,0 +1,15 @@
+relationship cb30ea32-30db-ded6-bf5c-3d5ca4234b10
+	relyOnReferentialIntegrity
+	fromColumn: oee.date_hour
+	toColumn: dim_date.date_hour
+
+relationship 58f50a3d-943d-7e33-873f-9b34b9a04cc0
+	relyOnReferentialIntegrity
+	fromColumn: oee.site_id
+	toColumn: sites.siteid
+
+relationship b3a9f746-736c-465d-c8a1-f226f40eda62
+	relyOnReferentialIntegrity
+	fromColumn: oee.machine_id
+	toColumn: machines.machineid
+

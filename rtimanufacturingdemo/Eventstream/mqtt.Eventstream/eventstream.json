@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "id": "7eb66f8d-0b6f-47f2-83ff-921063b6338e",
+      "name": "CustomEndpointSource",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "71b3c61b-4e8c-4167-a472-db51dcffff9c",
+      "name": "Eventhouse",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "DirectIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+        "tableName": "mqttdataraw",
+        "connectionName": "mqtt_machinedata-mqtt",
+        "mappingRuleName": "mqttdataraw_mapping"
+      },
+      "inputNodes": [
+        {
+          "name": "mqtt-stream"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "mqtt-stream",
+          "schema": {
+            "columns": []
+          }
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "174e4d86-1f38-4bcc-98f1-17abc397de31",
+      "name": "mqtt-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "CustomEndpointSource"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.1"
+}

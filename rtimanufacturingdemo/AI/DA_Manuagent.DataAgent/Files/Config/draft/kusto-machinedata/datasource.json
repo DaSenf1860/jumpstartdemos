@@ -1,0 +1,714 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "1967a46f-bd9f-8723-40d1-3637d35098b1",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "machinedata",
+  "type": "kusto",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "a4a62eab-d809-4d0e-9f0a-97f891f0d586",
+      "is_selected": true,
+      "display_name": "ForecastedMetrics",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "Availability",
+          "is_selected": true,
+          "display_name": "Availability",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "deviation",
+          "is_selected": true,
+          "display_name": "deviation",
+          "type": "kusto.column",
+          "data_type": "System.Data.SqlTypes.SqlDecimal",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Forecast_Availability",
+          "is_selected": true,
+          "display_name": "Forecast_Availability",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Forecast_Performance",
+          "is_selected": true,
+          "display_name": "Forecast_Performance",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "forecast_timestamp",
+          "is_selected": true,
+          "display_name": "forecast_timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machine_id",
+          "is_selected": true,
+          "display_name": "machine_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Performance",
+          "is_selected": true,
+          "display_name": "Performance",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "site_id",
+          "is_selected": true,
+          "display_name": "site_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "6affef2a-1946-4a96-9a4c-b33c87dd060f",
+      "is_selected": false,
+      "display_name": "machineraw",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "machine_id",
+          "is_selected": true,
+          "display_name": "machine_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sensors",
+          "is_selected": true,
+          "display_name": "sensors",
+          "type": "kusto.column",
+          "data_type": "System.Object",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "site_id",
+          "is_selected": true,
+          "display_name": "site_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "afe66de1-2222-4991-84ff-210a8ab46126",
+      "is_selected": true,
+      "display_name": "machines_internal",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "capacity",
+          "is_selected": true,
+          "display_name": "capacity",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "city",
+          "is_selected": true,
+          "display_name": "city",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "country",
+          "is_selected": true,
+          "display_name": "country",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "establishedyear",
+          "is_selected": true,
+          "display_name": "establishedyear",
+          "type": "kusto.column",
+          "data_type": "System.Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "hourlycapacity",
+          "is_selected": true,
+          "display_name": "hourlycapacity",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "latitude",
+          "is_selected": true,
+          "display_name": "latitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "longitude",
+          "is_selected": true,
+          "display_name": "longitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machineid",
+          "is_selected": true,
+          "display_name": "machineid",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machinename",
+          "is_selected": true,
+          "display_name": "machinename",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machinetypeid",
+          "is_selected": true,
+          "display_name": "machinetypeid",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "manufacturerid",
+          "is_selected": true,
+          "display_name": "manufacturerid",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "manufactureyear",
+          "is_selected": true,
+          "display_name": "manufactureyear",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "operator",
+          "is_selected": true,
+          "display_name": "operator",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "siteid",
+          "is_selected": true,
+          "display_name": "siteid",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sitename",
+          "is_selected": true,
+          "display_name": "sitename",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "status",
+          "is_selected": true,
+          "display_name": "status",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "989dc7f3-8d56-4501-bf09-ca99eab3196d",
+      "is_selected": false,
+      "display_name": "mqttdataraw",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "data_base64",
+          "is_selected": true,
+          "display_name": "data_base64",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "datacontenttype",
+          "is_selected": true,
+          "display_name": "datacontenttype",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "id",
+          "is_selected": true,
+          "display_name": "id",
+          "type": "kusto.column",
+          "data_type": "System.Guid",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "source",
+          "is_selected": true,
+          "display_name": "source",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "specversion",
+          "is_selected": true,
+          "display_name": "specversion",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "subject",
+          "is_selected": true,
+          "display_name": "subject",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "time",
+          "is_selected": true,
+          "display_name": "time",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "type",
+          "is_selected": true,
+          "display_name": "type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "6b6fd5df-c194-4b2b-a773-e1a7f03132a2",
+      "is_selected": true,
+      "display_name": "production_quality",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "batch_id",
+          "is_selected": true,
+          "display_name": "batch_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cycle_time_seconds",
+          "is_selected": true,
+          "display_name": "cycle_time_seconds",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Date",
+          "is_selected": true,
+          "display_name": "Date",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "defect_count",
+          "is_selected": true,
+          "display_name": "defect_count",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dimensional_check",
+          "is_selected": true,
+          "display_name": "dimensional_check",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "electrical_test",
+          "is_selected": true,
+          "display_name": "electrical_test",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "first_pass_yield",
+          "is_selected": true,
+          "display_name": "first_pass_yield",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "inspection_count",
+          "is_selected": true,
+          "display_name": "inspection_count",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machine_id",
+          "is_selected": true,
+          "display_name": "machine_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "operator_id",
+          "is_selected": true,
+          "display_name": "operator_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "pass_rate_percentage",
+          "is_selected": true,
+          "display_name": "pass_rate_percentage",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "performance_test",
+          "is_selected": true,
+          "display_name": "performance_test",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "product_id",
+          "is_selected": true,
+          "display_name": "product_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "production_line",
+          "is_selected": true,
+          "display_name": "production_line",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "rework_required",
+          "is_selected": true,
+          "display_name": "rework_required",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "site_id",
+          "is_selected": true,
+          "display_name": "site_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "surface_quality",
+          "is_selected": true,
+          "display_name": "surface_quality",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Time",
+          "is_selected": true,
+          "display_name": "Time",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "b179684d-ec22-44bf-9577-6925f9a73b72",
+      "is_selected": true,
+      "display_name": "sensors_parsed",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "Date",
+          "is_selected": true,
+          "display_name": "Date",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "machine_id",
+          "is_selected": true,
+          "display_name": "machine_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "measure_unit",
+          "is_selected": true,
+          "display_name": "measure_unit",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sensor_id",
+          "is_selected": true,
+          "display_name": "sensor_id",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sensor_type",
+          "is_selected": true,
+          "display_name": "sensor_type",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sensor_value",
+          "is_selected": true,
+          "display_name": "sensor_value",
+          "type": "kusto.column",
+          "data_type": "System.Data.SqlTypes.SqlDecimal",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "site_id",
+          "is_selected": true,
+          "display_name": "site_id",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Time",
+          "is_selected": true,
+          "display_name": "Time",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "timestamp",
+          "is_selected": true,
+          "display_name": "timestamp",
+          "type": "kusto.column",
+          "data_type": "System.DateTime",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "1258d3b0-3317-414d-a5ff-1dac6a701cd2",
+      "is_selected": false,
+      "display_name": "sites_internal",
+      "type": "kusto.table",
+      "description": null,
+      "children": [
+        {
+          "id": "capacity",
+          "is_selected": true,
+          "display_name": "capacity",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "city",
+          "is_selected": true,
+          "display_name": "city",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "country",
+          "is_selected": true,
+          "display_name": "country",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "establishedyear",
+          "is_selected": true,
+          "display_name": "establishedyear",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "latitude",
+          "is_selected": true,
+          "display_name": "latitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "longitude",
+          "is_selected": true,
+          "display_name": "longitude",
+          "type": "kusto.column",
+          "data_type": "System.Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "siteid",
+          "is_selected": true,
+          "display_name": "siteid",
+          "type": "kusto.column",
+          "data_type": "System.Int32",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "sitename",
+          "is_selected": true,
+          "display_name": "sitename",
+          "type": "kusto.column",
+          "data_type": "System.String",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

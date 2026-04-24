@@ -1,0 +1,169 @@
+table machines
+	lineageTag: 04b61421-d961-4efd-bfaa-b10192a0f8dd
+	sourceLineageTag: [masterdata].[machines]
+
+	column machineid
+		dataType: int64
+		formatString: 0
+		lineageTag: 5deaf8fa-6431-4b49-afa9-d8d5b92f16b3
+		sourceLineageTag: machineid
+		summarizeBy: none
+		sourceColumn: machineid
+
+		annotation SummarizationSetBy = Automatic
+
+	column machinename
+		dataType: string
+		lineageTag: 133d856c-9eef-4338-9da6-a75cdd5e621d
+		sourceLineageTag: machinename
+		summarizeBy: none
+		sourceColumn: machinename
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: int64
+		formatString: 0
+		lineageTag: 962118c1-c700-4d99-b9be-0c534808594e
+		sourceLineageTag: siteid
+		summarizeBy: none
+		sourceColumn: siteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column machinetypeid
+		dataType: int64
+		formatString: 0
+		lineageTag: 554dc853-8c22-4abb-9922-4466158b69a4
+		sourceLineageTag: machinetypeid
+		summarizeBy: none
+		sourceColumn: machinetypeid
+
+		annotation SummarizationSetBy = Automatic
+
+	column manufacturerid
+		dataType: int64
+		formatString: 0
+		lineageTag: 86a334e0-030c-4dd4-a906-22f9e300fe99
+		sourceLineageTag: manufacturerid
+		summarizeBy: none
+		sourceColumn: manufacturerid
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 2bde2388-6dbf-4735-8c0b-78612eaa59dd
+		sourceLineageTag: status
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column manufactureyear
+		dataType: int64
+		formatString: 0
+		lineageTag: cf709247-53c1-4f08-95c8-090f1c19ff74
+		sourceLineageTag: manufactureyear
+		summarizeBy: none
+		sourceColumn: manufactureyear
+
+		annotation SummarizationSetBy = Automatic
+
+	column hourlycapacity
+		dataType: int64
+		formatString: 0
+		lineageTag: a6b0481e-68ae-4080-9355-e8a6e8654566
+		sourceLineageTag: hourlycapacity
+		summarizeBy: none
+		sourceColumn: hourlycapacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column sitename
+		dataType: string
+		lineageTag: 84429539-7d89-447c-8674-205ddd1e5436
+		sourceLineageTag: sitename
+		summarizeBy: none
+		sourceColumn: sitename
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: e1a45990-31d0-4527-8254-6709fd48a833
+		sourceLineageTag: city
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: b5898c84-6dc4-4227-8f9a-f9d65445f1f1
+		sourceLineageTag: country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: 8857b587-1eda-4e85-934f-bdff417b1ca0
+		sourceLineageTag: capacity
+		summarizeBy: none
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column establishedyear
+		dataType: int64
+		formatString: 0
+		lineageTag: d3543d0b-2a1e-4a35-8d2d-9e3c1d495a13
+		sourceLineageTag: establishedyear
+		summarizeBy: none
+		sourceColumn: establishedyear
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 66bf7a50-227d-4e92-a1ec-b29d5e35e9f9
+		sourceLineageTag: latitude
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: 1019aa46-6f5c-45c9-acba-52bc54519b62
+		sourceLineageTag: longitude
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	hierarchy 'sitename Hierarchy'
+		lineageTag: 3e6b7f1a-c3f4-4523-a6c7-3a87b2ee8f7e
+
+		level sitename
+			lineageTag: 0edb0d53-fd2c-43d3-9ab5-48df162ef62b
+			column: sitename
+
+		level machinename
+			lineageTag: 0d6f19a5-be9e-4e01-8059-a3fc77424b89
+			column: machinename
+
+	partition machines = entity
+		mode: directLake
+		source
+			entityName: machines
+			schemaName: masterdata
+			expressionSource: 'DirectLake - ManufacturingData'
+
