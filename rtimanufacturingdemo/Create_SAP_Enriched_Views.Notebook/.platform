@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Create_SAP_Enriched_Views"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "491a27dd-09b1-ac91-4bec-5d59aa48f759"
+  }
+}

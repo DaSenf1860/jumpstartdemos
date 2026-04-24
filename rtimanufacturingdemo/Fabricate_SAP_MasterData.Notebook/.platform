@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Fabricate_SAP_MasterData"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "098405c4-eb42-98b5-4efd-4dfb9708b37a"
+  }
+}
