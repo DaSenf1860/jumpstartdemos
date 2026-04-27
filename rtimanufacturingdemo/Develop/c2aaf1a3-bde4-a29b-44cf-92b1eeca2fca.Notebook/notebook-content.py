@@ -524,7 +524,7 @@ headers = {"Authorization": "Bearer " + token}
 # CELL ********************
 
 def kusto_command(csl):
-    url = f"{eh_query_uri/v1/rest/mgmt"
+    url = f"{eh_query_uri}/v1/rest/mgmt"
     body = {"csl": csl, "db": "machinedata"}
     resp = requests.post(url, json=body, headers=headers)
     return resp
@@ -577,7 +577,7 @@ resp.status_code
 
 ### KQL
 command = """
-.set-or-replace machines_interal <| external_table('machines_external')
+.set-or-replace machines_internal <| external_table('machines_external')
 """
 
 resp = kusto_command(command)
@@ -624,7 +624,7 @@ resp.status_code
 
 ### KQL
 command = """
-.set-or-replace sites_interal <| external_table('sites_external')
+.set-or-replace sites_internal <| external_table('sites_external')
 """
 
 resp = kusto_command(command)

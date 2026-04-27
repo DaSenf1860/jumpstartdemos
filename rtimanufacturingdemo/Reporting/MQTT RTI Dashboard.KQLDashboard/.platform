@@ -3,7 +3,7 @@
   "metadata": {
     "type": "KQLDashboard",
     "displayName": "mqtt_rti_dashboard",
-    "description": "MQTT RTI Dashboard"
+    "description": "mqtt_rti_dashboard"
   },
   "config": {
     "version": "2.0",

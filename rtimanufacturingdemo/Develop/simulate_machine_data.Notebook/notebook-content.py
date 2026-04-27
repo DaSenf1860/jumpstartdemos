@@ -369,7 +369,7 @@ async def reset():
 
 # CELL ********************
 
-#await reset()
+await reset()
 
 # METADATA ********************
 
