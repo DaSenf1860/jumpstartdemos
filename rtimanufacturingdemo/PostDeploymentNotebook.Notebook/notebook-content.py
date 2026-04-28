@@ -11,8 +11,7 @@
 
 # MARKDOWN ********************
 
-# # Welcome to your new notebook
-# # Type here in the cell editor to add code!
+# # Run this notebook after deployment to adjust configurations and to ingest data
 
 
 # CELL ********************
@@ -28,7 +27,7 @@ print("Hello")
 
 # CELL ********************
 
-%run simulate_reference_data
+%run ingest_sap_data
 
 # METADATA ********************
 
@@ -39,7 +38,7 @@ print("Hello")
 
 # CELL ********************
 
-%run simulate_machine_data
+%run process_masterdata
 
 # METADATA ********************
 

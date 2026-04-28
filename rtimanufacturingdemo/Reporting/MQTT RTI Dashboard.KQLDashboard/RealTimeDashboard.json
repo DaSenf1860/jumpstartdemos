@@ -99,14 +99,16 @@
         "hideLegend": false,
         "legendLocation": "bottom",
         "xColumnTitle": "",
-        "xColumn": "machinename",
+        "xColumn": "machine_name",
         "yColumns": [
           "Quality",
           "Performance",
           "Availability",
           "OEE"
         ],
-        "seriesColumns": null,
+        "seriesColumns": [
+          "sitename"
+        ],
         "xAxisScale": "linear",
         "verticalLine": "",
         "crossFilterDisabled": false,
@@ -304,13 +306,9 @@
         "legendLocation": "bottom",
         "xColumnTitle": "",
         "xColumn": "timebin",
-        "yColumns": [
-          "min_sensor_value",
-          "max_sensor_value",
-          "avg_sensor_value"
-        ],
+        "yColumns": null,
         "seriesColumns": [
-          "machinename"
+          "machine_name"
         ],
         "xAxisScale": "linear",
         "verticalLine": "",
@@ -325,6 +323,7 @@
             "disabled": false
           }
         ],
+        "seriesColors": {},
         "drillthrough": [
           {
             "destinationPages": [],
@@ -367,12 +366,10 @@
         "xColumnTitle": "",
         "xColumn": "timebin",
         "yColumns": [
-          "min_sensor_value",
-          "max_sensor_value",
-          "avg_sensor_value"
+          "max_sensor_value"
         ],
         "seriesColumns": [
-          "machinename"
+          "machine_name"
         ],
         "xAxisScale": "linear",
         "verticalLine": "",
@@ -387,6 +384,7 @@
             "disabled": false
           }
         ],
+        "seriesColors": {},
         "drillthrough": [
           {
             "destinationPages": [],
@@ -429,12 +427,10 @@
         "xColumnTitle": "",
         "xColumn": "timebin",
         "yColumns": [
-          "min_sensor_value",
-          "max_sensor_value",
-          "avg_sensor_value"
+          "max_sensor_value"
         ],
         "seriesColumns": [
-          "machinename"
+          "machine_name"
         ],
         "xAxisScale": "linear",
         "verticalLine": "",
@@ -449,6 +445,7 @@
             "disabled": false
           }
         ],
+        "seriesColors": {},
         "drillthrough": [
           {
             "destinationPages": [],
@@ -500,32 +497,6 @@
       "showOnPages": {
         "kind": "all"
       }
-    },
-    {
-      "kind": "string",
-      "id": "20f84367-a834-40bb-8494-456742948d84",
-      "displayName": "Machine Name",
-      "description": "",
-      "variableName": "machine_name",
-      "selectionType": "array",
-      "includeAllOption": true,
-      "defaultValue": {
-        "kind": "all"
-      },
-      "dataSource": {
-        "kind": "query",
-        "columns": {
-          "value": "machinename"
-        },
-        "queryRef": {
-          "kind": "query",
-          "queryId": "db99f7e0-9c29-4fe7-b616-9eee91fc5b00"
-        },
-        "autoReset": true
-      },
-      "showOnPages": {
-        "kind": "all"
-      }
     }
   ],
   "dataSources": [
@@ -568,10 +539,9 @@
         "kind": "inline",
         "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
       },
-      "text": "Availability()\n| lookup Performance() on machine_id, site_id\n| lookup Quality() on machine_id, site_id\n| project machine_id, site_id, Availability, Performance, Quality\n| lookup machines_internal on $left.machine_id == $right.machineid\n| project machinename, sitename, Availability, Performance, Quality\n| where (isempty(['machine_name']) or machinename in (['machine_name'])) and (isempty(['site_name']) or sitename in (['site_name']))\n| extend OEE = round((Availability*Performance*Quality)/10000,0)",
+      "text": "Availability()\n| lookup Performance() on machine_id, site_id\n| lookup Quality() on machine_id, site_id\n| project machine_id, site_id, Availability, Performance, Quality\n| lookup machines_internal on $left.machine_id == $right.machine_id\n| project machine_name, site_id, Availability, Performance, Quality\n| lookup sites_internal on $left.site_id == $right.siteid\n| project machine_name, sitename, Availability, Performance, Quality\n| where (isempty(['site_name']) or sitename in (['site_name']))\n| extend OEE = round((Availability*Performance*Quality)/10000,0)",
       "id": "1654b924-b00b-4fef-89e6-13ac641a3109",
       "usedVariables": [
-        "machine_name",
         "site_name"
       ]
     },
@@ -609,12 +579,11 @@
         "kind": "inline",
         "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
       },
-      "text": "sensors_parsed\n| where sensor_type == 'temperature'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, sitename, sensor_type, sensor_id, timebin\n",
+      "text": "sensors_parsed\n| where sensor_type == 'temperature'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machine_id\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"]))\n| summarize max(sensor_value) by machine_name, sitename, sensor_type, sensor_id, timebin\n",
       "id": "a0c6d1b8-eb6c-4ca3-9b83-d641040045ce",
       "usedVariables": [
         "_endTime",
         "_startTime",
-        "machine_name",
         "site_name"
       ]
     },
@@ -623,12 +592,11 @@
         "kind": "inline",
         "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
       },
-      "text": "sensors_parsed\n| where sensor_type == 'pressure'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, site_id, sensor_type, sensor_id, timebin",
+      "text": "sensors_parsed\n| where sensor_type == 'pressure'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machine_id\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"]))\n| summarize max(sensor_value) by machine_name, site_id, sensor_type, sensor_id, timebin",
       "id": "b99a18e7-ff5d-4cb4-b908-104aefd36a35",
       "usedVariables": [
         "_endTime",
         "_startTime",
-        "machine_name",
         "site_name"
       ]
     },
@@ -637,12 +605,11 @@
         "kind": "inline",
         "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
       },
-      "text": "sensors_parsed\n| where sensor_type == 'vibration'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machineid\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"])) and (isempty([\"machine_name\"]) or machinename in ([\"machine_name\"]))\n| summarize max(sensor_value) by machinename, site_id, sensor_type, sensor_id, timebin",
+      "text": "sensors_parsed\n| where sensor_type == 'vibration'\n| where timestamp > ago(1h)\n| where timestamp between (_startTime .. _endTime)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machine_id\n| lookup sites_internal on $left.site_id == $right.siteid\n| where (isempty([\"site_name\"]) or sitename in ([\"site_name\"]))\n| summarize max(sensor_value) by machine_name, site_id, sensor_type, sensor_id, timebin",
       "id": "3bd5d887-7f93-41fe-9f54-6d4d1be8268a",
       "usedVariables": [
         "_endTime",
         "_startTime",
-        "machine_name",
         "site_name"
       ]
     },
@@ -653,15 +620,6 @@
       },
       "text": "// Please enter your KQL query (Example):\n// <table name>\n// | where <datetime column> between (['_startTime'] .. ['_endTime']) // Time range filtering\n// | take 100\nsites_internal\n| project sitename",
       "id": "b8c727b6-47b4-4c9e-b056-4907f51378e0",
-      "usedVariables": []
-    },
-    {
-      "dataSource": {
-        "kind": "inline",
-        "dataSourceId": "a6591953-5965-42d1-9053-ae56df8a37ec"
-      },
-      "text": "machines_internal\n| project machinename",
-      "id": "db99f7e0-9c29-4fe7-b616-9eee91fc5b00",
       "usedVariables": []
     }
   ]

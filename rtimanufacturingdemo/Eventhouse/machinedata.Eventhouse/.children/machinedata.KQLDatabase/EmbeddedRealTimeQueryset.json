@@ -20,7 +20,7 @@
     "tabs": [
       {
         "id": "7d3ae120-ffe9-47ec-be8d-521e795cb632",
-        "content": "",
+        "content": "sensors_parsed\n| where sensor_type == 'temperature'\n| where timestamp > ago(1h)\n| extend timebin = bin(timestamp,10s)\n| lookup machines_internal on $left.machine_id == $right.machine_id\n| lookup sites_internal on $left.site_id == $right.siteid",
         "title": "",
         "dataSourceId": "e5ffe2e9-2c39-471e-9acf-4fd25cec2904"
       },

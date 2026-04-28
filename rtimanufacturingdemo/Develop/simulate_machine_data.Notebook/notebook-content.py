@@ -121,9 +121,9 @@ df = spark.read.format("delta").load(f"{manufacturing_data}/masterdata/machines"
 machines_df = df.toPandas()
 df = spark.read.format("delta").load(f"{manufacturing_data}/masterdata/products")
 products_df = df.toPandas()
-machines = machines_df['machineid'].astype(int).tolist()
-products = products_df['productid'].astype(int).tolist()
-sites = machines_df['siteid'].astype(int).tolist()
+machines = machines_df['machine_id'].astype(int).tolist()
+products = products_df['product_id'].astype(int).tolist()
+sites = machines_df['site_id'].astype(int).tolist()
 
 # METADATA ********************
 
@@ -197,14 +197,14 @@ async def send_sensor_data(SENSOR_BIAS=False, timestamp = None):
     
     # Load machines and sites from CSV files
 
-    # Create a mapping of siteid to sitename
+    # Create a mapping of site_id to sitename
     
     # Create machines list from CSV data
     machines_ = []
     for _, row in machines_df.iterrows():
         machines_.append({
-            "machine_id": row['machineid'],
-            "site_id": row['siteid']})
+            "machine_id": row['machine_id'],
+            "site_id": row['site_id']})
         
     
     producer = EventHubProducerClient.from_connection_string(

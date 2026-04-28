@@ -20,11 +20,11 @@
 ```
 [{"Properties":{"Path":"$['specversion']"},"column":"specversion","datatype":""},{"Properties":{"Path":"$['source']"},"column":"source","datatype":""},{"Properties":{"Path":"$['subject']"},"column":"subject","datatype":""},{"Properties":{"Path":"$['type']"},"column":"type","datatype":""},{"Properties":{"Path":"$['id']"},"column":"id","datatype":""},{"Properties":{"Path":"$['datacontenttype']"},"column":"datacontenttype","datatype":""},{"Properties":{"Path":"$['time']"},"column":"time","datatype":""},{"Properties":{"Path":"$['data_base64']"},"column":"data_base64","datatype":""}]
 ```
-.create-merge table sites_internal (siteid:int, sitename:string, city:string, country:string, capacity:int, establishedyear:int, latitude:real, longitude:real) 
 .create-merge table sensors_parsed (machine_id:int, site_id:int, sensor_id:string, sensor_type:string, measure_unit:string, sensor_value:decimal, timestamp:datetime, Date:string, Time:string) 
 .create-merge table production_quality (product_id:int, batch_id:string, machine_id:int, production_line:string, Date:string, Time:string, timestamp:datetime, cycle_time_seconds:real, operator_id:string, site_id:int, first_pass_yield:int, rework_required:int, dimensional_check:int, surface_quality:int, electrical_test:int, performance_test:int, defect_count:int, inspection_count:int, pass_rate_percentage:real) 
 .create-merge table ForecastedMetrics (machine_id:int, site_id:int, deviation:decimal, forecast_timestamp:datetime, Performance:real, Forecast_Performance:real, Availability:real, Forecast_Availability:real) 
-.create-merge table machines_internal (machineid:int, machinename:string, siteid:int, machinetypeid:int, manufacturerid:int, status:string, manufactureyear:int, hourlycapacity:real, operator:string, sitename:string, city:string, country:string, capacity:long, establishedyear:long, latitude:real, longitude:real) 
+.create-merge table machines_internal (machine_id:int, equipment_number:string, machine_name:string, site_id:int, equipment_category:string, technical_object_type:string, manufacturer:string, manufacturer_part_type:string, construction_year:string, construction_month:string, serial_number:string, operation_start_date:datetime, acquisition_value:real, currency:string) 
+.create-merge table sites_internal (siteid:int, sap_plant_code:string, sitename:string, city:string, country:string, region:string, street:string, postal_code:string, latitude:real, longitude:real, addresstimezone:string, salesorganization:string, defaultpurchasingorganization:string, factorycalendar:string, plantcategory:string) 
 .create-or-alter function with (folder = "Demo", docstring = "Availability", skipvalidation = "true", view = true) Availability() {
     let production_start = ago(10m);
 
