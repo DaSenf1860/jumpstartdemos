@@ -1,0 +1,5 @@
+find_replace:
+  # Replace Eventhouse query service URI references
+  - find_value: "d50af31d-cdfc-44b9-95c3-892f1923f0a8"
+    replace_value:
+      _ALL_: "$items.KQLDatabase.machinedata.$id"
