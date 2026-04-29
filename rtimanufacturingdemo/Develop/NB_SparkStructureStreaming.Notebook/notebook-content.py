@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "ManufacturingData",
+# META       "default_lakehouse_name": "manufacturing_data",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -18,6 +18,17 @@
 # META       ]
 # META     }
 # META   }
+# META }
+
+# CELL ********************
+
+%pip install msfabricpysdkcore -q
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
 # META }
 
 # CELL ********************
@@ -32,7 +43,6 @@ from datetime import datetime, timedelta
 from pyspark.sql.window import Window
 
 
-
 spark.conf.set('spark.sql.parquet.vorder.default', 'true')
 
 # Configuration
@@ -43,6 +53,14 @@ jobs = [{"source_table": "production_quality",
         "target_schema": "dbo",
         "target_table": "sensor_data"},
 ]
+from msfabricpysdkcore import FabricClientCore
+
+
+fcc = FabricClientCore()
+ws_id = notebookutils.runtime.context["currentWorkspaceId"]
+manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+
+manu_lh_lake = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}"
 
 
 
@@ -57,7 +75,7 @@ jobs = [{"source_table": "production_quality",
 
 def stream_yo(source_table, target_schema, target_table):
 
-    SOURCE_ONELAKE_PATH = f"abfss://manufacturingdemo@onelake.dfs.fabric.microsoft.com/ManufacturingData.Lakehouse/Tables/machinedata/{source_table}"
+    SOURCE_ONELAKE_PATH = f"{manu_lh_lake}/Tables/machinedata/{source_table}"
 
     # Variables to store min and max timestamps
     timestamps = {"min": None, "max": None, "count": 0}
@@ -101,7 +119,7 @@ def stream_yo(source_table, target_schema, target_table):
         .writeStream
         .foreachBatch(process_batch)
         .trigger(availableNow=True)
-        .option("checkpointLocation", f"Files/checkpoints/{source_table}_{target_table}/_checkpoint/streaming_append")
+        .option("checkpointLocation", f"{manu_lh_lake}/Files/checkpoints/{source_table}_{target_table}/_checkpoint/streaming_append")
         .start()
     )
     # Wait for termination (set timeout as needed)
@@ -122,17 +140,17 @@ def stream_yo(source_table, target_schema, target_table):
 # CELL ********************
 
 def update_date_table():
-    df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
+    df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
 
     max_date_hour = df.agg(F.max("timestamp").alias("max_date_hour")).collect()[0][0]
     end_date = max_date_hour
 
     try:
-        df_date = spark.sql("SELECT * FROM ManufacturingData.dbo.dim_date")
+        df_date = spark.sql("SELECT * FROM manufacturing_data.dbo.dim_date")
         start_date = df_date.agg(F.max("date_hour").alias("max_date_hour")).collect()[0][0]
         start_date = datetime.strptime(start_date, "%Y-%m-%d %H:%M")
     except:
-        spark.sql("DROP TABLE IF EXISTS ManufacturingData.dbo.dim_date")
+        spark.sql("DROP TABLE IF EXISTS manufacturing_data.dbo.dim_date")
         start_date = datetime(2025, 1, 1)
 
     if start_date >= end_date:
@@ -183,7 +201,7 @@ def update_oee_table(min_datetime=None):
 
     ideal_cycle_time = 4
 
-    df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
+    df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
 
     if min_datetime:
         min_datetime_p = datetime.strptime(min_datetime, "%Y-%m-%d %H:%M")
@@ -267,14 +285,14 @@ def update_oee_table(min_datetime=None):
 
     if min_datetime:
         try:
-            no_of_deleted = spark.sql(f"DELETE FROM ManufacturingData.dbo.oee WHERE date_hour >= '{min_datetime}'").collect()[0][0]
+            no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee WHERE date_hour >= '{min_datetime}'").collect()[0][0]
         except:
             print("Table does not exist")
             no_of_deleted = 0
 
     else: 
         try:
-            no_of_deleted = spark.sql(f"DELETE FROM ManufacturingData.dbo.oee").collect()[0][0]
+            no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee").collect()[0][0]
         except:
             print("Table does not exist")
             no_of_deleted = 0
@@ -285,7 +303,7 @@ def update_oee_table(min_datetime=None):
     result_df.write.format("delta").mode("append").saveAsTable("dbo.OEE")
     no_of_inserted = result_df.count()
     print(f"Number of inserted rows: {no_of_inserted}")
-    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM ManufacturingData.dbo.oee")
+    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
     latest_datehour_oee = latest_datehour_df.collect()[0][0]
     return latest_datehour_oee
 
@@ -300,7 +318,7 @@ def update_oee_table(min_datetime=None):
 
 # CELL ********************
 
-#update_oee_table()
+update_oee_table()
 
 # METADATA ********************
 
@@ -317,7 +335,7 @@ max_date = datetime(2025, 1, 1, 0, 0, 0)
 min_datetime = datetime(2030, 1, 1)
 
 try: 
-    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM ManufacturingData.dbo.oee")
+    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
     latest_datehour_oee = latest_datehour_df.collect()[0][0]
     latest_datehour_oee_tp = datetime.strptime(latest_datehour_oee, "%Y-%m-%d %H:%M")
 except:
