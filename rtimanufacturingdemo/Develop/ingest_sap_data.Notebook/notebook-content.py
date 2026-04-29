@@ -8,9 +8,8 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "ed36b35e-461d-45e9-88b3-214aaf9e05ab",
-# META       "default_lakehouse_name": "sap_masterdata",
-# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06"
+# META       "default_lakehouse_name": "",
+# META       "default_lakehouse_workspace_id": ""
 # META     }
 # META   }
 # META }

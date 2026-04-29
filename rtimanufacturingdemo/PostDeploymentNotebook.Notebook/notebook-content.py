@@ -49,6 +49,7 @@ print("Hello")
 
 # CELL ********************
 
+%run simulate_machine_data
 
 # METADATA ********************
 

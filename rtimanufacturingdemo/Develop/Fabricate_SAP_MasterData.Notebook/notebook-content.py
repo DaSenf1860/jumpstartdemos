@@ -8,14 +8,8 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
-# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
-# META       "known_lakehouses": [
-# META         {
-# META           "id": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-# META         }
-# META       ]
+# META       "default_lakehouse_name": "",
+# META       "default_lakehouse_workspace_id": ""
 # META     }
 # META   }
 # META }
@@ -35,14 +29,15 @@
 
 from msfabricpysdkcore import FabricClientCore
 
-from pyspark.sql.functions import *
+from pyspark.sql.functions import (
+    udf, col, lit, when,
+    row_number, array, element_at
+)
 from pyspark.sql.types import *
 from pyspark.sql.window import Window
-from pyspark.sql.functions import udf, col
 from pyspark.sql.types import StringType
 
 from pyspark.sql.types import StructType, StructField, StringType
-from pyspark.sql.functions import lit, col, when
 import requests
 
 fcc = FabricClientCore()
@@ -62,7 +57,19 @@ manu_data
 
 eh = fcc.get_eventhouse(ws_id, eventhouse_name="machinedata")
 eh_query_uri = eh.properties['queryServiceUri']
-eh_query_uri
+eh.id, eh_query_uri
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+kqldb_id = fcc.get_kql_database(ws_id, kql_database_name="machinedata").id
+kqldb_id
 
 # METADATA ********************
 
@@ -77,8 +84,8 @@ eh_query_uri
 # 1. PLANTS/SITES - I_PLANT + I_ADDRESS for full location info
 # ========================================
 
-plant_df = spark.read.format("parquet").load(f"{manu_data}/landing_sap/I_PLANT")
-address_full = spark.read.format("parquet").load(f"{manu_data}/landing_sap/I_ADDRESS")
+plant_df = spark.read.format("delta").load(f"{manu_data}/landing_sap/I_PLANT")
+address_full = spark.read.format("delta").load(f"{manu_data}/landing_sap/I_ADDRESS")
 
 # Map to manufacturing site IDs
 
@@ -110,15 +117,14 @@ sap_plant_with_addr = (plant_df.alias("p")
         col("p.FACTORYCALENDAR").alias("factorycalendar"),
         col("p.PLANTCATEGORY").alias("plantcategory"))
     .orderBy("sap_plant_code")
-    .limit(5))
+    )
 
    
 
 # Write your output as before
 sap_plant_with_addr.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
-    .save(f"{manu_data}/masterdata/sites")
+   .save(f"{manu_data}/masterdata/sites")
 print(f" sites written: {sap_plant_with_addr.count()} rows")
-display(sap_plant_with_addr)
 
 
 # METADATA ********************
@@ -173,7 +179,7 @@ equip_mapping = (sap_equip_m
 equip_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/machines")
 print(f" machines written: {equip_mapping.count()} rows")
-display(equip_mapping)
+
 
 # METADATA ********************
 
@@ -226,7 +232,6 @@ product_mapping = (sap_prod_numbered
 product_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/products")
 print(f" products written: {product_mapping.count()} rows")
-display(product_mapping.limit(5))
 
 # METADATA ********************
 
@@ -267,7 +272,7 @@ supplier_mapping = (sap_suppl_subset
 supplier_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/suppliers")
 print(f" suppliers written: {supplier_mapping.count()} rows")
-display(supplier_mapping)
+
 
 # METADATA ********************
 
@@ -299,7 +304,7 @@ customer_subset = (sap_customers
 customer_subset.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/customers")
 print(f" customers written: {customer_subset.count()} rows")
-display(customer_subset)
+
 
 # METADATA ********************
 
@@ -395,6 +400,24 @@ resp = kusto_command(command)
 if resp.status_code != 200:
     print(command, resp.text)
 
+command = """
+.alter-merge table production_quality policy mirroring dataformat=parquet with (IsEnabled=true, TargetLatencyInMinutes=5);
+"""
+
+resp = kusto_command(command)
+if resp.status_code != 200:
+    print(command, resp.text)
+
+command = """
+.alter-merge table sensors_parsed policy mirroring dataformat=parquet with (IsEnabled=true, TargetLatencyInMinutes=5);
+"""
+
+resp = kusto_command(command)
+if resp.status_code != 200:
+    print(command, resp.text)
+
+
+
 # METADATA ********************
 
 # META {
@@ -403,6 +426,17 @@ if resp.status_code != 200:
 # META }
 
 # CELL ********************
+
+table_names = ["production_quality", "sensors_parsed"]
+
+for table_name in table_names:
+    resp = fcc.create_shortcut(workspace_id=ws_id,
+                        item_id=manu_lh,
+                        path="/Tables/machinedata",
+                        name=table_name,
+                        target={"oneLake": {"itemId": kqldb_id,
+                                            "path": f"Tables/{table_name}",
+                                            "workspaceId": ws_id}})
 
 
 # METADATA ********************
