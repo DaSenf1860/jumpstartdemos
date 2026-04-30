@@ -21,17 +21,17 @@ find_replace:
       _ALL_: "$items.Environment.eventhubenv.$id"
     item_type: "Notebook"
 
-  - find_value: "c0b40e67-108f-a5c7-49c5-6469b146b9e5"
-    replace_value:
-      _ALL_: "$items.Notebook.simulate_machine_data.$id"
-    item_type: "DataPipeline"
+  # - find_value: "c0b40e67-108f-a5c7-49c5-6469b146b9e5"
+  #   replace_value:
+  #     _ALL_: "$items.Notebook.simulate_machine_data.$id"
+  #   item_type: "DataPipeline"
 
-  - find_value: "5226452b-3760-9878-4994-e18306a2f573"
-    replace_value:
-      _ALL_: "$items.Notebook.BackfillProductionQualityData.$id"
-    item_type: "DataPipeline"
+  # - find_value: "5226452b-3760-9878-4994-e18306a2f573"
+  #   replace_value:
+  #     _ALL_: "$items.Notebook.BackfillProductionQualityData.$id"
+  #   item_type: "DataPipeline"
 
-  - find_value: "35ec9e7e-a4fc-9c5d-42c7-8f1d34f68f56"
-    replace_value:
-      _ALL_: "$items.Notebook.NB_SparkStructureStreaming.$id"
-    item_type: "DataPipeline"
+  # - find_value: "35ec9e7e-a4fc-9c5d-42c7-8f1d34f68f56"
+  #   replace_value:
+  #     _ALL_: "$items.Notebook.NB_SparkStructureStreaming.$id"
+  #   item_type: "DataPipeline"
