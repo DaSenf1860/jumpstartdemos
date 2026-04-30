@@ -31,8 +31,9 @@ from pyspark.sql.functions import (
     current_date, current_timestamp, date_format
 )
 import random
-
-df = spark.read.format("parquet").load("Files/data/productionquality")
+print("🚀 Creating Data for historical analysis")
+df = spark.read.format("parquet").load("Files/data/production_quality")
+print(f"✅ Success: reading sample data")
 
 
 # METADATA ********************
@@ -88,6 +89,8 @@ for i in range(timewarp):
 
     # e.g. append to your target table
     df_modified.write.mode("append").format("delta").saveAsTable("dbo.production_quality")
+    print(f"✅ Success: Creating data for date: t-{i}")
+
 
 
 # METADATA ********************
@@ -103,7 +106,6 @@ df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
 all_count = df.count()
 df = df.dropDuplicates(["timestamp","machine_id","site_id"])
 without_duplicates = df.count()
-print(all_count, without_duplicates)
 
 # METADATA ********************
 
@@ -116,59 +118,8 @@ print(all_count, without_duplicates)
 
 if all_count > without_duplicates:
     df.write.format("delta").mode("overwrite").saveAsTable("manufacturing_data.dbo.production_quality")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-df.count()
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-df_backup = spark.read.format("delta").load("Files/backup/production_quality")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-display(df_backup)
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-display(df)
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
+    print(f"✅ Success: Cleaning up duplicates")
+print(f"✅ Success: No duplicates")
 
 
 # METADATA ********************

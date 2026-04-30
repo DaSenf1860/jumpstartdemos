@@ -22,28 +22,6 @@
 
 # CELL ********************
 
-%pip install msfabricpysdkcore -q
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-print("🚀 Installed Fabric Python SDK")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 from pyspark.sql.functions import (
     udf, col, lit, when,
     row_number, array, element_at
@@ -435,41 +413,6 @@ if resp.status_code != 200:
     print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
 else:
     print(f"✅ Success: Setting One Lake availability for sensors_parsed")
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-from msfabricpysdkcore import FabricClientCore
-
-fcc = FabricClientCore()
-kqldb_id = fcc.get_kql_database(ws_id, kql_database_name = "machinedata").id
-table_names = ["production_quality", "sensors_parsed"]
-
-for table_name in table_names:
-    resp = fcc.create_shortcut(workspace_id=ws_id,
-                        item_id=manu_lh,
-                        path="/Tables/machinedata",
-                        name=table_name,
-                        target={"oneLake": {"itemId": kqldb_id,
-                                            "path": f"Tables/{table_name}",
-                                            "workspaceId": ws_id}})
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
 
 
 # METADATA ********************
