@@ -44,7 +44,7 @@ df = spark.read.format("parquet").load("Files/data/productionquality")
 
 # CELL ********************
 
-timewarp = 365
+timewarp = 10
 
 # Today (UTC) and current time as HH:mm:ss (UTC)
 today = current_date()
@@ -68,26 +68,27 @@ for i in range(timewarp):
     df_modified = (
         df_
         # new date is "today - i days"
-        .withColumn("date_adjusted", date_sub(today, i))
+        .withColumn("Date", date_format(date_sub(today, i), "yyyy-MM-dd"))
         # parse Time (HH:mm:ss) once
         .withColumn("time_ts", to_timestamp(col("Time"), "HH:mm:ss"))
         # new timestamp = adjusted date + original time-of-day
         .withColumn(
             "timestamp",
             make_timestamp(
-                year(col("date_adjusted")),
-                month(col("date_adjusted")),
-                dayofmonth(col("date_adjusted")),
+                year(col("Date")),
+                month(col("Date")),
+                dayofmonth(col("Date")),
                 hour(col("time_ts")),
                 minute(col("time_ts")),
                 second(col("time_ts"))
             )
         )
-        .drop("date_adjusted", "time_ts")
+        .drop("time_ts")
     )
 
     # e.g. append to your target table
     df_modified.write.mode("append").format("delta").saveAsTable("dbo.production_quality")
+
 
 # METADATA ********************
 
@@ -115,6 +116,50 @@ print(all_count, without_duplicates)
 
 if all_count > without_duplicates:
     df.write.format("delta").mode("overwrite").saveAsTable("manufacturing_data.dbo.production_quality")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+df.count()
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+df_backup = spark.read.format("delta").load("Files/backup/production_quality")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+display(df_backup)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+display(df)
 
 # METADATA ********************
 

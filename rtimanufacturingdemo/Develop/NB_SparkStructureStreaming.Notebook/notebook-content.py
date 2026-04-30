@@ -22,17 +22,6 @@
 
 # CELL ********************
 
-%pip install msfabricpysdkcore -q
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 # Welcome to your new notebook
 # Type here in the cell editor to add code!
 # Spark Structured Streaming: OneLake Delta to Lakehouse Append
@@ -53,12 +42,9 @@ jobs = [{"source_table": "production_quality",
         "target_schema": "dbo",
         "target_table": "sensor_data"},
 ]
-from msfabricpysdkcore import FabricClientCore
 
-
-fcc = FabricClientCore()
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
-manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
 
 manu_lh_lake = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}"
 
@@ -103,7 +89,6 @@ def stream_yo(source_table, target_schema, target_table):
                 timestamps["max"] = batch_max
             
             timestamps["count"] += batch_df.count()
-            
             # Write the batch to the target table
             batch_df.write.format("delta").mode("append").saveAsTable(f"{target_schema}.{target_table}")
 
@@ -151,7 +136,7 @@ def update_date_table():
         start_date = datetime.strptime(start_date, "%Y-%m-%d %H:%M")
     except:
         spark.sql("DROP TABLE IF EXISTS manufacturing_data.dbo.dim_date")
-        start_date = datetime(2025, 1, 1)
+        start_date = datetime(2026, 1, 1)
 
     if start_date >= end_date:
         print("Up to date")
@@ -371,6 +356,16 @@ while True:
         update_oee_table_ = False
         
     sleep(10)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 
 # METADATA ********************
 

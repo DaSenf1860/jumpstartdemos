@@ -43,28 +43,6 @@ table sites
 
 		annotation SummarizationSetBy = Automatic
 
-	column capacity
-		dataType: int64
-		formatString: 0
-		sourceProviderType: bigint
-		lineageTag: 6cfabb40-f0f6-48fc-a7d1-e851b240dc03
-		sourceLineageTag: capacity
-		summarizeBy: none
-		sourceColumn: capacity
-
-		annotation SummarizationSetBy = Automatic
-
-	column establishedyear
-		dataType: int64
-		formatString: 0
-		sourceProviderType: bigint
-		lineageTag: 8229aa9b-ce91-4db0-9d82-ea443cf94e68
-		sourceLineageTag: establishedyear
-		summarizeBy: none
-		sourceColumn: establishedyear
-
-		annotation SummarizationSetBy = Automatic
-
 	column latitude
 		dataType: double
 		sourceProviderType: float
@@ -88,6 +66,87 @@ table sites
 		annotation SummarizationSetBy = Automatic
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sap_plant_code
+		dataType: string
+		lineageTag: b6c5b6c9-1e26-48bf-9a2e-a42cf1ffeb50
+		sourceLineageTag: sap_plant_code
+		summarizeBy: none
+		sourceColumn: sap_plant_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 13012d05-580a-4f7e-b714-b1eb18d3d920
+		sourceLineageTag: region
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column street
+		dataType: string
+		lineageTag: 44443279-9f5a-45a2-8583-3f663252ebd2
+		sourceLineageTag: street
+		summarizeBy: none
+		sourceColumn: street
+
+		annotation SummarizationSetBy = Automatic
+
+	column postal_code
+		dataType: string
+		lineageTag: 6f6dcb93-da46-4870-9ec5-ad93fcf135bc
+		sourceLineageTag: postal_code
+		summarizeBy: none
+		sourceColumn: postal_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column addresstimezone
+		dataType: string
+		lineageTag: e3f21eae-ee47-43fb-ad88-383a8bc84e2e
+		sourceLineageTag: addresstimezone
+		summarizeBy: none
+		sourceColumn: addresstimezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesorganization
+		dataType: string
+		lineageTag: e6b98c52-dfc5-446c-92cb-e7a06f871dea
+		sourceLineageTag: salesorganization
+		summarizeBy: none
+		sourceColumn: salesorganization
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaultpurchasingorganization
+		dataType: string
+		lineageTag: 8734b6f7-339d-4fb7-bc68-d06caeffcf61
+		sourceLineageTag: defaultpurchasingorganization
+		summarizeBy: none
+		sourceColumn: defaultpurchasingorganization
+
+		annotation SummarizationSetBy = Automatic
+
+	column factorycalendar
+		dataType: string
+		lineageTag: 5e714939-96c8-4b98-bc83-bd008b94f93d
+		sourceLineageTag: factorycalendar
+		summarizeBy: none
+		sourceColumn: factorycalendar
+
+		annotation SummarizationSetBy = Automatic
+
+	column plantcategory
+		dataType: string
+		lineageTag: cdda52fd-9486-4616-abdb-b7dd166ba2e2
+		sourceLineageTag: plantcategory
+		summarizeBy: none
+		sourceColumn: plantcategory
+
+		annotation SummarizationSetBy = Automatic
 
 	partition sites = entity
 		mode: directLake

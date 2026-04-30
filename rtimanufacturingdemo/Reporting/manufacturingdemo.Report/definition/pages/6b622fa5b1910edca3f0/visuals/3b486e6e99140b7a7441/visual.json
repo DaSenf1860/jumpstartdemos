@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "3b486e6e99140b7a7441",
   "position": {
     "x": 490.06693440428376,
@@ -28,20 +28,6 @@
               },
               "queryRef": "dim_date.date_id",
               "nativeQueryRef": "date_id"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "machines"
-                    }
-                  },
-                  "Property": "machinename"
-                }
-              },
-              "queryRef": "machines.machinename",
-              "nativeQueryRef": "machinename"
             },
             {
               "field": {

@@ -8,8 +8,14 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse_name": "",
-# META       "default_lakehouse_workspace_id": ""
+# META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
+# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
@@ -27,7 +33,16 @@
 
 # CELL ********************
 
-from msfabricpysdkcore import FabricClientCore
+print("🚀 Installed Fabric Python SDK")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 
 from pyspark.sql.functions import (
     udf, col, lit, when,
@@ -40,36 +55,11 @@ from pyspark.sql.types import StringType
 from pyspark.sql.types import StructType, StructField, StringType
 import requests
 
-fcc = FabricClientCore()
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
-manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
 manu_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
-manu_data
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-eh = fcc.get_eventhouse(ws_id, eventhouse_name="machinedata")
-eh_query_uri = eh.properties['queryServiceUri']
-eh.id, eh_query_uri
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-kqldb_id = fcc.get_kql_database(ws_id, kql_database_name="machinedata").id
-kqldb_id
+eh_query_uri = "https://trd-5dac5shauuupcc8kxn.z7.kusto.fabric.microsoft.com"
+kqldb_id = "d50af31d-cdfc-44b9-95c3-892f1923f0a8"
 
 # METADATA ********************
 
@@ -120,11 +110,12 @@ sap_plant_with_addr = (plant_df.alias("p")
     )
 
    
+print("🚀 Processing table: sites")
 
 # Write your output as before
 sap_plant_with_addr.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
    .save(f"{manu_data}/masterdata/sites")
-print(f" sites written: {sap_plant_with_addr.count()} rows")
+print(f"✅ Written table: sites with {sap_plant_with_addr.count()} rows")
 
 
 # METADATA ********************
@@ -176,9 +167,12 @@ equip_mapping = (sap_equip_m
         col("CURRENCY").alias("currency")
     ))
 
+print("🚀 Processing table: machines")
+
 equip_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/machines")
-print(f" machines written: {equip_mapping.count()} rows")
+print(f"✅ Written table: machines with {equip_mapping.count()} rows")
+
 
 
 # METADATA ********************
@@ -229,9 +223,13 @@ product_mapping = (sap_prod_numbered
         "sap_net_weight", "sap_division", "sap_country_of_origin")
     .filter(col("product_id").isNotNull()))
 
+print("🚀 Processing table: products")
+
 product_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/products")
-print(f" products written: {product_mapping.count()} rows")
+
+print(f"✅ Written table: products with {product_mapping.count()} rows")
+
 
 # METADATA ********************
 
@@ -269,10 +267,12 @@ supplier_mapping = (sap_suppl_subset
         col("INDUSTRY").alias("sap_industry"),
         col("primary_component_id").cast("int")))
 
+print("🚀 Processing table: suppliers")
+
 supplier_mapping.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/suppliers")
-print(f" suppliers written: {supplier_mapping.count()} rows")
 
+print(f"✅ Written table: suppliers with {supplier_mapping.count()} rows")
 
 # METADATA ********************
 
@@ -301,9 +301,13 @@ customer_subset = (sap_customers
         col("REGION").alias("sap_region"),
         col("INDUSTRY").alias("sap_industry")))
 
+
+print("🚀 Processing table: customers")
+
 customer_subset.write.format("delta").mode("overwrite").option("overwriteSchema", "true") \
     .save(f"{manu_data}/masterdata/customers")
-print(f" customers written: {customer_subset.count()} rows")
+
+print(f"✅ Written table: customers with {customer_subset.count()} rows")
 
 
 # METADATA ********************
@@ -314,6 +318,9 @@ print(f" customers written: {customer_subset.count()} rows")
 # META }
 
 # CELL ********************
+
+print("🚀 Triger KQL Database Commands")
+
 
 def kusto_command(csl):
     token = notebookutils.credentials.getToken("kusto")
@@ -350,7 +357,10 @@ kind = delta
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ External table for machines successful")
+
 
 ### KQL
 command = """
@@ -359,7 +369,9 @@ command = """
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ Ingested data from external table machines to a internal one")
 
 ### KQL
 
@@ -389,7 +401,9 @@ kind = delta
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ External table for sites successful")
 
 ### KQL
 command = """
@@ -398,7 +412,9 @@ command = """
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ Ingested data from external table sites to a internal one")
 
 command = """
 .alter-merge table production_quality policy mirroring dataformat=parquet with (IsEnabled=true, TargetLatencyInMinutes=5);
@@ -406,7 +422,9 @@ command = """
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ Success: Setting One Lake availability for production_quality")
 
 command = """
 .alter-merge table sensors_parsed policy mirroring dataformat=parquet with (IsEnabled=true, TargetLatencyInMinutes=5);
@@ -414,8 +432,9 @@ command = """
 
 resp = kusto_command(command)
 if resp.status_code != 200:
-    print(command, resp.text)
-
+    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+else:
+    print(f"✅ Success: Setting One Lake availability for sensors_parsed")
 
 
 # METADATA ********************
@@ -427,6 +446,10 @@ if resp.status_code != 200:
 
 # CELL ********************
 
+from msfabricpysdkcore import FabricClientCore
+
+fcc = FabricClientCore()
+
 table_names = ["production_quality", "sensors_parsed"]
 
 for table_name in table_names:
@@ -437,6 +460,16 @@ for table_name in table_names:
                         target={"oneLake": {"itemId": kqldb_id,
                                             "path": f"Tables/{table_name}",
                                             "workspaceId": ws_id}})
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 
 
 # METADATA ********************

@@ -8,8 +8,14 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse_name": "",
-# META       "default_lakehouse_workspace_id": ""
+# META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
+# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
@@ -67,9 +73,8 @@ fcc = FabricClientCore()
 # CELL ********************
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
-manu_lh = fcc.get_lakehouse(ws_id, lakehouse_name="manufacturing_data").id
+manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
 manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
-manufacturing_data
 
 # METADATA ********************
 
