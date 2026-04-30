@@ -59,7 +59,7 @@ ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
 manu_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
 eh_query_uri = "https://trd-5dac5shauuupcc8kxn.z7.kusto.fabric.microsoft.com"
-kqldb_id = "d50af31d-cdfc-44b9-95c3-892f1923f0a8"
+
 
 # METADATA ********************
 
@@ -449,7 +449,7 @@ else:
 from msfabricpysdkcore import FabricClientCore
 
 fcc = FabricClientCore()
-
+kqldb_id = fcc.get_kql_database(ws_id, kql_database_name = "machinedata").id
 table_names = ["production_quality", "sensors_parsed"]
 
 for table_name in table_names:
