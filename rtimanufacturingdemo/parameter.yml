@@ -2,6 +2,7 @@ find_replace:
   - find_value: "d50af31d-cdfc-44b9-95c3-892f1923f0a8"
     replace_value:
       _ALL_: "$items.KQLDatabase.machinedata.$id"
+    item_type: "KQLDashboard"
 
   - find_value: "ce753ac1-7233-4889-b54d-f0ca9df04e06"
     replace_value:
