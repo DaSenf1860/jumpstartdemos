@@ -113,7 +113,7 @@ for table_name in table_names:
 
 # CELL ********************
 
-orchestration_pipeline = fcc.get_data_pipeline(ws_id, data_pipeline_name = "orchestration")
+orchestration_pipeline = fcc.get_data_pipeline(ws_id, data_pipeline_name = "Pipeline_orchestration")
 operation = fcc.run_on_demand_item_job(workspace_id = ws_id, item_id=orchestration_pipeline.id, job_type="Pipeline")
 operation
 
