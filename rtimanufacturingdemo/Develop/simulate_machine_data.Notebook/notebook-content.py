@@ -17,11 +17,20 @@
 # META         }
 # META       ]
 # META     },
-# META     "environment": {
-# META       "environmentId": "86674781-3f6c-9bfa-4eb0-44160f5a4591",
-# META       "workspaceId": "00000000-0000-0000-0000-000000000000"
-# META     }
+# META     "environment": {}
 # META   }
+# META }
+
+# CELL ********************
+
+%pip install msfabricpysdkcore -q
+%pip install azure-eventhub -q
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
 # META }
 
 # CELL ********************

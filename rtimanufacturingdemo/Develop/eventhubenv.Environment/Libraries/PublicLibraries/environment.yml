@@ -1,4 +1,0 @@
-dependencies:
-  - pip:
-      - azure-eventhub==5.15.1
-      - msfabricpysdkcore==0.3.1

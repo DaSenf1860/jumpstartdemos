@@ -113,6 +113,30 @@ for table_name in table_names:
 
 # CELL ********************
 
+orchestration_pipeline = fcc.get_data_pipeline(ws_id, data_pipeline_name = "orchestration")
+operation = fcc.run_on_demand_item_job(workspace_id = ws_id, item_id=orchestration_pipeline.id, job_type="Pipeline")
+operation
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+%run simulate_machine_data
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 
 # METADATA ********************
 
