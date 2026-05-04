@@ -30,6 +30,7 @@ from pyspark.sql.functions import (
     make_timestamp, to_timestamp, hour, minute, second,
     current_date, current_timestamp, date_format
 )
+
 import random
 print("🚀 Creating Data for historical analysis")
 df = spark.read.format("parquet").load("Files/data/production_quality")
@@ -120,6 +121,66 @@ if all_count > without_duplicates:
     df.write.format("delta").mode("overwrite").saveAsTable("manufacturing_data.dbo.production_quality")
     print(f"✅ Success: Cleaning up duplicates")
 print(f"✅ Success: No duplicates")
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+from pyspark.sql import functions as F
+from datetime import datetime, timedelta
+
+df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+
+max_date_hour = df.agg(F.max("timestamp").alias("max_date_hour")).collect()[0][0]
+end_date = max_date_hour
+
+spark.sql("DROP TABLE IF EXISTS manufacturing_data.dbo.dim_date")
+start_date = datetime(2026, 1, 1)
+
+date_list = [(start_date + timedelta(hours=x),) for x in range(1, 24*(end_date - start_date).days + 24)]
+    
+# Create DataFrame from date list
+df_dates = spark.createDataFrame(date_list, ["date"])
+
+# Create dimension table with date attributes
+
+# Create dimension table with date attributes
+dim_date = df_dates.select(
+    F.date_format(F.col("date"), "yyyy-MM-dd").cast("string").alias("date_id"),
+    F.year("date").alias("year"),
+    F.concat(F.year("date"), F.lit("-"), F.month("date")).alias("year_month"),
+    F.dayofmonth("date").alias("day"),
+    F.date_format("date", "yyyy-MM-dd HH:00").alias("date_hour"),
+    F.dayofweek("date").alias("day_of_week"),
+    F.concat(F.year("date"), F.lit("-W"), F.weekofyear("date")).alias("year_week"),
+    F.concat(F.year("date"), F.lit("-Q"), F.quarter("date")).alias("year_quarter"),
+    F.concat(F.year("date"), F.lit("-"), F.dayofyear("date")).alias("year_day_of_year"),
+    F.when(F.dayofweek("date").isin(1, 7), True).otherwise(False).alias("is_weekend"),
+    F.date_format("date", "EEEE").alias("day_name"),
+    F.date_format("date", "MMMM yyyy").alias("year_month_name"),
+    F.when((F.hour("date") >= 6) & (F.hour("date") < 12), "morning")
+        .when((F.hour("date") >= 12) & (F.hour("date") < 18), "afternoon")
+        .otherwise("night").alias("shift")
+).orderBy("date_id")
+
+
+#dim_date.write.format("delta").mode("overwrite").option("overwriteSchema", True).saveAsTable("dbo.dim_date")
+dim_date.write.format("delta").mode("append").saveAsTable("dbo.dim_date")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 
 
 # METADATA ********************
