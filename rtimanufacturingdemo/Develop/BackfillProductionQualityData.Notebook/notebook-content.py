@@ -182,6 +182,125 @@ dim_date.write.format("delta").mode("append").saveAsTable("dbo.dim_date")
 
 # CELL ********************
 
+from pyspark.sql.window import Window
+
+ideal_cycle_time = 4
+
+df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+
+df = df.withColumn(
+    "date_hour",
+    F.date_format(F.col("timestamp"), "yyyy-MM-dd HH:00")
+)
+
+# Create 10-second time bins
+binned_df = df.withColumn(
+    "timebin10s",
+    F.from_unixtime((F.unix_timestamp("timestamp") / 10).cast("long") * 10)
+)
+
+# Define window partitioned by date_hour, machine_id, site_id
+window_spec = Window.partitionBy("date_hour", "machine_id", "site_id")
+
+# Add production_start and production_end using window functions
+binned_df = binned_df.withColumn("production_start", F.min("timebin10s").over(window_spec))
+binned_df = binned_df.withColumn("production_end", F.max("timebin10s").over(window_spec))
+
+# Calculate distinct bins count per group using window
+binned_df = binned_df.withColumn(
+    "Uptime_in_sec",
+    F.size(F.collect_set("timebin10s").over(window_spec)) * 10
+)
+
+# Calculate duration
+binned_df = binned_df.withColumn(
+    "duration_seconds",
+    F.lit(3600)
+)
+
+# Calculate Availability
+binned_df = binned_df.withColumn(
+    "Availability",
+    F.when(F.col("duration_seconds") > 0, F.col("Uptime_in_sec") / F.col("duration_seconds"))
+    .otherwise(0)
+)
+
+# Aggregate results
+result_df = binned_df.groupBy("machine_id", "site_id", "date_hour").agg(
+    F.first("Availability").alias("Availability"),
+    F.count("product_id").alias("actual_output"),
+    F.sum("cycle_time_seconds").alias("sum_cycle_time_in_seconds"),
+    F.count("product_id").alias("Total_Products"),
+    F.sum("first_pass_yield").alias("Good_Products")
+)
+
+result_df = result_df.filter(
+    F.col("machine_id").isNotNull() & F.col("site_id").isNotNull()
+)
+
+result_df = result_df.withColumn(
+    "Quality",
+    F.when(F.col("Total_Products") > 0,  F.col("Good_Products")/F.col("Total_Products"))
+    .otherwise(0)
+)
+
+result_df = result_df.withColumn(
+    "ideal_cycle_time",
+    F.lit(ideal_cycle_time)
+)
+result_df = result_df.withColumn(
+    "ideal_output",
+    F.col("sum_cycle_time_in_seconds")/F.col("ideal_cycle_time")
+)
+
+result_df = result_df.withColumn(
+    "Performance",
+    F.when(F.col("Ideal_Output") > 0,  F.col("Total_Products")/F.col("Ideal_Output"))
+    .otherwise(0)
+)
+
+result_df = result_df.withColumn(
+    "OEE",
+    F.col("Performance")*F.col("Quality")*F.col("Availability")
+)
+
+
+try:
+    no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee").collect()[0][0]
+except:
+    print("Table does not exist")
+    no_of_deleted = 0
+
+
+print(f"Number of deleted rows: {no_of_deleted}")
+    
+result_df.write.format("delta").mode("append").saveAsTable("dbo.OEE")
+no_of_inserted = result_df.count()
+print(f"Number of inserted rows: {no_of_inserted}")
+latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
+latest_datehour_oee = latest_datehour_df.collect()[0][0]
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+from sempy import fabric
+fabric.refresh_dataset("sm_manufacturing_operations")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 
 # METADATA ********************
 

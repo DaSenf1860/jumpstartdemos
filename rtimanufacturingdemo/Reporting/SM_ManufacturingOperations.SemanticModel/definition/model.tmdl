@@ -14,7 +14,6 @@ annotation PBI_ProTooling = ["TMDLView_Desktop","RemoteModeling","WebModelingEdi
 
 ref table sites
 ref table dim_date
-ref table sensor_data
 ref table oee
 ref table machines
 
