@@ -75,20 +75,6 @@ print("🚀 Creating One Lake Shortcuts")
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 fcc = FabricClientCore()
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-print("🚀 Creating One Lake Shortcuts")
-
-ws_id = notebookutils.runtime.context["currentWorkspaceId"]
-fcc = FabricClientCore()
 kqldb_id = fcc.get_kql_database(workspace_id = ws_id, kql_database_name="machinedata").id
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
 table_names = ["production_quality", "sensors_parsed"]
@@ -127,16 +113,6 @@ operation
 # CELL ********************
 
 %run simulate_machine_data
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 
 # METADATA ********************
 
