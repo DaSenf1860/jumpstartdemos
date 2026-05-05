@@ -26,6 +26,15 @@
 # 
 # After deployment just click **"Run all"** on this notebook.
 # 
+# After the deployment start exploring:
+# - the `RealtimeDashboard` in the Reporting folder let´s you analyze the streaming data processed with Realtime Intelligence
+# - the `ManufacturingOperationsReport` in the Reporting folder is a Power BI Report built on the collected OEE data from the last months
+# - the `TalkToManufacturingData`-DataAgent in the AI folder lets you talk to your Streaming and Lakehouse in natural language
+# 
+# From there dive deeper in the mechanics of the Eventhouse and Spark Notebooks which do the magic in the background.
+# 
+# ### On this notebook
+# 
 # This notebook performs several post-deployment steps to prepare your environment and start data creation and transformation flows. Below is an overview of what each step does:
 # 
 # 1. **Install required Fabric SDK package 📦**  

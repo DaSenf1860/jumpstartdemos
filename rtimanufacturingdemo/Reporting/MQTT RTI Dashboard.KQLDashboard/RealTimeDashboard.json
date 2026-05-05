@@ -503,7 +503,7 @@
     {
       "kind": "kusto-trident",
       "id": "a6591953-5965-42d1-9053-ae56df8a37ec",
-      "name": " ManufacturingRealtimeAnalytics",
+      "name": "ManufacturingRealtimeAnalytics",
       "clusterUri": "",
       "databaseArtifactId": "d50af31d-cdfc-44b9-95c3-892f1923f0a8",
       "database": "1967a46f-bd9f-8723-40d1-3637d35098b1",
