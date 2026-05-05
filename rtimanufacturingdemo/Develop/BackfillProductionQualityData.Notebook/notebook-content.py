@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_name": "ManufacturingData",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -103,7 +103,7 @@ for i in range(timewarp):
 
 # CELL ********************
 
-df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
 all_count = df.count()
 df = df.dropDuplicates(["timestamp","machine_id","site_id"])
 without_duplicates = df.count()
@@ -118,7 +118,7 @@ without_duplicates = df.count()
 # CELL ********************
 
 if all_count > without_duplicates:
-    df.write.format("delta").mode("overwrite").saveAsTable("manufacturing_data.dbo.production_quality")
+    df.write.format("delta").mode("overwrite").saveAsTable("ManufacturingData.dbo.production_quality")
     print(f"✅ Success: Cleaning up duplicates")
 print(f"✅ Success: No duplicates")
 
@@ -135,12 +135,12 @@ print(f"✅ Success: No duplicates")
 from pyspark.sql import functions as F
 from datetime import datetime, timedelta
 
-df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
 
 max_date_hour = df.agg(F.max("timestamp").alias("max_date_hour")).collect()[0][0]
 end_date = max_date_hour
 
-spark.sql("DROP TABLE IF EXISTS manufacturing_data.dbo.dim_date")
+spark.sql("DROP TABLE IF EXISTS ManufacturingData.dbo.dim_date")
 start_date = datetime(2026, 1, 1)
 
 date_list = [(start_date + timedelta(hours=x),) for x in range(1, 24*(end_date - start_date).days + 24)]
@@ -186,7 +186,7 @@ from pyspark.sql.window import Window
 
 ideal_cycle_time = 4
 
-df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
 
 df = df.withColumn(
     "date_hour",
@@ -266,7 +266,7 @@ result_df = result_df.withColumn(
 
 
 try:
-    no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee").collect()[0][0]
+    no_of_deleted = spark.sql(f"DELETE FROM ManufacturingData.dbo.oee").collect()[0][0]
 except:
     print("Table does not exist")
     no_of_deleted = 0
@@ -277,7 +277,7 @@ print(f"Number of deleted rows: {no_of_deleted}")
 result_df.write.format("delta").mode("append").saveAsTable("dbo.OEE")
 no_of_inserted = result_df.count()
 print(f"Number of inserted rows: {no_of_inserted}")
-latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
+latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM ManufacturingData.dbo.oee")
 latest_datehour_oee = latest_datehour_df.collect()[0][0]
 
 # METADATA ********************
@@ -290,7 +290,7 @@ latest_datehour_oee = latest_datehour_df.collect()[0][0]
 # CELL ********************
 
 from sempy import fabric
-fabric.refresh_dataset("sm_manufacturing_operations")
+fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
 
 # METADATA ********************
 

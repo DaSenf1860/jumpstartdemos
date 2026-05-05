@@ -88,7 +88,7 @@ manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh
 
 
 # Event Hub configuration
-es = fcc.get_eventstream(ws_id, eventstream_name="es_machinedata")
+es = fcc.get_eventstream(ws_id, eventstream_name="SensorDataEvents")
 topology = fcc.get_eventstream_topology(ws_id, es.id)
 for source in topology["sources"]:
     if source["name"] == 'CustomEndpoint-Source':
@@ -100,7 +100,7 @@ if source_id:
     EVENT_HUB_NAME = custom_endpoint_info["eventHubName"]
     EVENT_HUB_CONNECTION_STR = custom_endpoint_info["accessKeys"]["primaryConnectionString"]
 
-es = fcc.get_eventstream(ws_id, eventstream_name="mqtt")
+es = fcc.get_eventstream(ws_id, eventstream_name="QualityDataEvents")
 topology = fcc.get_eventstream_topology(ws_id, es.id)
 for source in topology["sources"]:
     if source["name"] == 'CustomEndpointSource':

@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_name": "ManufacturingData",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -304,7 +304,7 @@ def kusto_command(csl):
     token = notebookutils.credentials.getToken("kusto")
     headers = {"Authorization": "Bearer " + token}
     url = f"{eh_query_uri}/v1/rest/mgmt"
-    body = {"csl": csl, "db": "machinedata"}
+    body = {"csl": csl, "db": "ManufacturingRealtimeAnalytics"}
     resp = requests.post(url, json=body, headers=headers)
     return resp
 

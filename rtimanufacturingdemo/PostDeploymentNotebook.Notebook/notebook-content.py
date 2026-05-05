@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_name": "ManufacturingData",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -22,7 +22,46 @@
 
 # MARKDOWN ********************
 
-# # Run this notebook after deployment to adjust configurations and to ingest data
+# ## 🚀 Run this notebook after deployment
+# 
+# After deployment just click **"Run all"** on this notebook.
+# 
+# This notebook performs several post-deployment steps to prepare your environment and start data creation and transformation flows. Below is an overview of what each step does:
+# 
+# 1. **Install required Fabric SDK package 📦**  
+#    The first code cell installs the `msfabricpysdkcore` Python package, which provides the `FabricClientCore` class used to interact with Microsoft Fabric items (Lakehouses, Data Pipelines, KQL databases, etc.) via code.
+# 
+# 2. **Import Fabric client library 🧩**  
+#    The next cell imports `FabricClientCore` from the installed package so it can be used to look up items (like the KQL database and pipeline) and trigger jobs programmatically.
+# 
+# 3. **Ingest SAP data 📥**  
+#    The `%run IngestSAPData` cell runs a separate notebook/script named `IngestSAPData`.  
+#    This simulates connecting to a SAP ERP system and ingests landing data into the Manufacturing Data Lakehouse.
+#    
+# 4. **Process master data 🧹**  
+#    The `%run ProcessMasterdata` cell runs the `ProcessMasterdata` notebook/script.  
+#    This step transforms, and standardizes master data (e.g., materials, plants, equipment) so it can be reliably used in downstream analytics and KQL.
+# 
+# 5. **Create OneLake shortcuts to mirrored KQL tables 🔗**  
+#    The next cell:
+#    - Reads the current workspace ID from `notebookutils.runtime.context`.
+#    - Uses `FabricClientCore` to locate the `ManufacturingRealtimeAnalytics` KQL database in this workspace.
+#    - For each table in `table_names` (currently `production_quality` and `sensors_parsed`):
+#      - Creates a OneLake shortcut in the `ManufacturingData` Lakehouse.
+#      - Points that shortcut to the corresponding mirrored KQL table path under `Tables/` in the `ManufacturingRealtimeAnalytics` KQL database.  
+#    This makes the mirrored KQL data directly accessible from the Lakehouse Files/Tables experience.
+# 
+# 6. **Run the orchestration pipeline on-demand 🧵**  
+#    The following cell:
+#    - Uses `FabricClientCore` to find the data pipeline named `OrchestrationPipeline` in the current workspace.
+#    - Starts an **on-demand run** of that pipeline (`run_on_demand_item_job` with `job_type="Pipeline"`).  
+#    This triggers the operations to build up a Power BI data model. It builds a history of events, refreshes the semantic model and starts a notebook which updates the tables with the new event data using Spark Structured Streaming. The spark job stops after two hours. You can cancel also the notebook job earlier in the monitoring tab.
+# 
+# 7. **Simulate machine data 🤖📊**  
+#    The last cell `%run SimulateMachineData` executes the `SimulateMachineData` notebook/script.  
+#    This generates and ingests synthetic quality testbench and sensor data, so that dashboards, KQL queries, and reports have data to work with right after deployment. The simulation stops after two hours. You can cancel also the notebook job earlier in the monitoring tab.
+# 
+# You can run the notebook top to bottom after deployment to fully wire up data sources, transformations, shortcuts, and pipelines for your manufacturing scenario.
 
 
 # CELL ********************
@@ -49,7 +88,7 @@ from msfabricpysdkcore import FabricClientCore
 
 # CELL ********************
 
-%run ingest_sap_data"
+%run IngestSAPData
 
 # METADATA ********************
 
@@ -60,7 +99,7 @@ from msfabricpysdkcore import FabricClientCore
 
 # CELL ********************
 
-%run process_masterdata
+%run ProcessMasterdata
 
 # METADATA ********************
 
@@ -75,13 +114,13 @@ print("🚀 Creating One Lake Shortcuts")
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 fcc = FabricClientCore()
-kqldb_id = fcc.get_kql_database(workspace_id = ws_id, kql_database_name="machinedata").id
-manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
+kqldb_id = fcc.get_kql_database(workspace_id = ws_id, kql_database_name="ManufacturingRealtimeAnalytics").id
+manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080" # this is automatically updated during deployment
 table_names = ["production_quality", "sensors_parsed"]
 for table_name in table_names:
     fcc.create_shortcut(workspace_id=ws_id,
                         item_id=manu_lh,
-                        path="/Tables/machinedata",
+                        path="/Tables/ManufacturingRealtimeAnalytics",
                         name=table_name,
                         target={"oneLake": {"itemId": kqldb_id,
                                             "path": f"Tables/{table_name}",
@@ -99,7 +138,7 @@ for table_name in table_names:
 
 # CELL ********************
 
-orchestration_pipeline = fcc.get_data_pipeline(ws_id, data_pipeline_name = "Pipeline_orchestration")
+orchestration_pipeline = fcc.get_data_pipeline(ws_id, data_pipeline_name = "OrchestrationPipeline")
 operation = fcc.run_on_demand_item_job(workspace_id = ws_id, item_id=orchestration_pipeline.id, job_type="Pipeline")
 operation
 
@@ -112,7 +151,7 @@ operation
 
 # CELL ********************
 
-%run simulate_machine_data
+%run SimulateMachineData
 
 # METADATA ********************
 

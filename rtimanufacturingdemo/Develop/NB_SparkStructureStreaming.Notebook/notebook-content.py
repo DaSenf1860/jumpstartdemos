@@ -125,17 +125,17 @@ def stream_yo(source_table, target_schema, target_table):
 # CELL ********************
 
 def update_date_table():
-    df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+    df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
 
     max_date_hour = df.agg(F.max("timestamp").alias("max_date_hour")).collect()[0][0]
     end_date = max_date_hour
 
     try:
-        df_date = spark.sql("SELECT * FROM manufacturing_data.dbo.dim_date")
+        df_date = spark.sql("SELECT * FROM ManufacturingData.dbo.dim_date")
         start_date = df_date.agg(F.max("date_hour").alias("max_date_hour")).collect()[0][0]
         start_date = datetime.strptime(start_date, "%Y-%m-%d %H:%M")
     except:
-        spark.sql("DROP TABLE IF EXISTS manufacturing_data.dbo.dim_date")
+        spark.sql("DROP TABLE IF EXISTS ManufacturingData.dbo.dim_date")
         start_date = datetime(2026, 1, 1)
 
     if start_date >= end_date:
@@ -186,7 +186,7 @@ def update_oee_table(min_datetime=None):
 
     ideal_cycle_time = 4
 
-    df = spark.sql("SELECT * FROM manufacturing_data.dbo.production_quality")
+    df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
 
     if min_datetime:
         min_datetime_p = datetime.strptime(min_datetime, "%Y-%m-%d %H:%M")
@@ -270,14 +270,14 @@ def update_oee_table(min_datetime=None):
 
     if min_datetime:
         try:
-            no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee WHERE date_hour >= '{min_datetime}'").collect()[0][0]
+            no_of_deleted = spark.sql(f"DELETE FROM ManufacturingData.dbo.oee WHERE date_hour >= '{min_datetime}'").collect()[0][0]
         except:
             print("Table does not exist")
             no_of_deleted = 0
 
     else: 
         try:
-            no_of_deleted = spark.sql(f"DELETE FROM manufacturing_data.dbo.oee").collect()[0][0]
+            no_of_deleted = spark.sql(f"DELETE FROM ManufacturingData.dbo.oee").collect()[0][0]
         except:
             print("Table does not exist")
             no_of_deleted = 0
@@ -288,7 +288,7 @@ def update_oee_table(min_datetime=None):
     result_df.write.format("delta").mode("append").saveAsTable("dbo.OEE")
     no_of_inserted = result_df.count()
     print(f"Number of inserted rows: {no_of_inserted}")
-    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
+    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM ManufacturingData.dbo.oee")
     latest_datehour_oee = latest_datehour_df.collect()[0][0]
     return latest_datehour_oee
 
@@ -320,7 +320,7 @@ max_date = datetime(2025, 1, 1, 0, 0, 0)
 min_datetime = datetime(2030, 1, 1)
 
 try: 
-    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM manufacturing_data.dbo.oee")
+    latest_datehour_df = spark.sql(f"SELECT MAX(date_hour) FROM ManufacturingData.dbo.oee")
     latest_datehour_oee = latest_datehour_df.collect()[0][0]
     latest_datehour_oee_tp = datetime.strptime(latest_datehour_oee, "%Y-%m-%d %H:%M")
 except:
