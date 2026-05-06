@@ -1,7 +1,7 @@
 [
   {
     "name": "sensors_parsed",
-    "path": "/Tables/machinedata",
+    "path": "/Tables/ManufacturingRealtimeAnalytics",
     "target": {
       "type": "OneLake",
       "oneLake": {
@@ -14,7 +14,7 @@
   },
   {
     "name": "production_quality",
-    "path": "/Tables/machinedata",
+    "path": "/Tables/ManufacturingRealtimeAnalytics",
     "target": {
       "type": "OneLake",
       "oneLake": {

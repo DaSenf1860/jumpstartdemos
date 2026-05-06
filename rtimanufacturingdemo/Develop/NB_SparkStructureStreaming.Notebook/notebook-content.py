@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_name": "ManufacturingData",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -61,7 +61,7 @@ manu_lh_lake = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}"
 
 def stream_yo(source_table, target_schema, target_table):
 
-    SOURCE_ONELAKE_PATH = f"{manu_lh_lake}/Tables/machinedata/{source_table}"
+    SOURCE_ONELAKE_PATH = f"{manu_lh_lake}/Tables/ManufacturingRealtimeAnalytics/{source_table}"
 
     # Variables to store min and max timestamps
     timestamps = {"min": None, "max": None, "count": 0}
@@ -304,6 +304,8 @@ def update_oee_table(min_datetime=None):
 # CELL ********************
 
 update_oee_table()
+from sempy import fabric
+fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
 
 # METADATA ********************
 
