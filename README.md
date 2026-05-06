@@ -4,7 +4,7 @@ End-to-end Microsoft Fabric demo that showcases a modern manufacturing scenario:
 
 ## 🖼️ Architecture
 
-![Architecture](../rtimanufacturingdemo_light.svg)
+![Architecture](rtimanufacturingdemo_light.svg)
 
 ## ✨ What's Inside
 
