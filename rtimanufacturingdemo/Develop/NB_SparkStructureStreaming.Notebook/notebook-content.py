@@ -25,7 +25,7 @@
 # Welcome to your new notebook
 # Type here in the cell editor to add code!
 # Spark Structured Streaming: OneLake Delta to Lakehouse Append
-from time import sleep
+from time import sleep, time
 from pyspark.sql.streaming import StreamingQueryException
 from pyspark.sql import functions as F
 from datetime import datetime, timedelta
