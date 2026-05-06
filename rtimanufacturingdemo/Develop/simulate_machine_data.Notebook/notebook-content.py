@@ -9,7 +9,7 @@
 # META   "dependencies": {
 # META     "lakehouse": {
 # META       "default_lakehouse": "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080",
-# META       "default_lakehouse_name": "manufacturing_data",
+# META       "default_lakehouse_name": "ManufacturingData",
 # META       "default_lakehouse_workspace_id": "ce753ac1-7233-4889-b54d-f0ca9df04e06",
 # META       "known_lakehouses": [
 # META         {
@@ -37,6 +37,9 @@
 
 SENSOR_BIAS = False  
 BIAS = True
+from time import sleep, time
+
+start_time_nb = time()
 
 # METADATA ********************
 
@@ -400,16 +403,8 @@ while True:
     #if (time() - SENSOR_BIAS_countdown) > 3600:
     #    BIAS = True
     sleep(0.1)
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
+    if time() - start_time_nb > 7200:
+        break
 
 # METADATA ********************
 

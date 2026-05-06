@@ -306,14 +306,34 @@ i = 0
 j = 0
 while True:
     refresh_execution_details =  fabric.get_refresh_execution_details(dataset = "ManufacturingOperationsSemanticModel", refresh_request_id = refresh_request_id)
-    if refresh_execution_details.extended_status in ["Failed", "Completed"] or j > 60:
-        break
+    if refresh_execution_details.extended_status in ["Failed", "Completed"] or j > 120:
+        if refresh_execution_details.extended_status == "Failed":
+            refresh_request_id = fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
+            print("Failed semantic model refresh, trying now attempt")
+            i = 0
+            continue
+        elif refresh_execution_details.extended_status == "Completed":
+            print(f"✅ Success: Semantic Model refreshed")
+            break
+        else:
+            print(f"Timeout Semantic Model Refresh")
+
     print(f"Status: {refresh_execution_details.extended_status}" )
     i = i + 1
     j = j + i
     print(f"Trying it again in {i} seconds")
     sleep(i)
 
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 
 
 # METADATA ********************

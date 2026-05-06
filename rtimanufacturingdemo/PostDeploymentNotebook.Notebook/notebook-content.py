@@ -24,9 +24,9 @@
 
 # ## 🚀 Run this notebook after deployment
 # 
-# After deployment just click **"Run all"** on this notebook.
+# After deployment just click **"Run all"** on this notebook. **It takes up to 5 minutes** until the RealtimeDashboard is showing data as master data needs to be processed initially. **It takes additional 5 minutes** to build up the historical dataset for the Power BI Report. So either check the monitoring tab to see what is happening or grab a coffee ☕
 # 
-# After the deployment start exploring:
+# Then start exploring:
 # - the `RealtimeDashboard` in the Reporting folder let´s you analyze the streaming data processed with Realtime Intelligence
 # - the `ManufacturingOperationsReport` in the Reporting folder is a Power BI Report built on the collected OEE data from the last months
 # - the `TalkToManufacturingData`-DataAgent in the AI folder lets you talk to your Streaming and Lakehouse in natural language

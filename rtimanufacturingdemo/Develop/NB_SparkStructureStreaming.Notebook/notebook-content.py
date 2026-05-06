@@ -31,7 +31,7 @@ from pyspark.sql import functions as F
 from datetime import datetime, timedelta
 from pyspark.sql.window import Window
 
-
+start_time_nb = time()
 spark.conf.set('spark.sql.parquet.vorder.default', 'true')
 
 # Configuration
@@ -356,28 +356,10 @@ while True:
         latest_datehour_oee_tp = datetime.strptime(latest_datehour_oee, "%Y-%m-%d %H:%M")
         print("Success")
         update_oee_table_ = False
-        
+    
+    if time() - start_time_nb > 7200:
+        break
     sleep(10)
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 
 # METADATA ********************
 
