@@ -290,7 +290,31 @@ latest_datehour_oee = latest_datehour_df.collect()[0][0]
 # CELL ********************
 
 from sempy import fabric
-fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
+from time import sleep
+refresh_request_id = fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+i = 0
+j = 0
+while True:
+    refresh_execution_details =  fabric.get_refresh_execution_details(dataset = "ManufacturingOperationsSemanticModel", refresh_request_id = refresh_request_id)
+    if refresh_execution_details.extended_status in ["Failed", "Completed"] or j > 60:
+        break
+    print(f"Status: {refresh_execution_details.extended_status}" )
+    i = i + 1
+    j = j + i
+    print(f"Trying it again in {i} seconds")
+    sleep(i)
+
+
 
 # METADATA ********************
 
