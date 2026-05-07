@@ -55,6 +55,24 @@ Everything in this folder is a Fabric workspace definition you can deploy with [
 
 After the items are published, open the **`PostDeploymentNotebook`** in the Fabric workspace and run it. It wires everything together — loading sample data, configuring connections, and getting the demo ready to use.
 
+## 🎉 Have Fun
+
+Once the **`PostDeploymentNotebook`** has been running for 5 minutes, you can already see streaming data visualized in the RealtimeDashboard (Reporting Folder).
+
+![RealtimeDashboard](rtidashboard1.png)
+
+You see your core KPIs updating in Realtime, also explore the other pages of this dashboard to drill down on sensor data timeseries and to see the most recent data coming in.
+
+Once the **`PostDeploymentNotebook`** has been running for 10 minutes, you can also go to the Power BI report **`ManufacturingOperationsReport`** and dive deeper on how KPIs have been trending over time, and how they differ by dimensions like sites, time, shifts and machines.
+
+![ManufacturingOperationsReport](powerbireport.png)
+
+You can also open the **🤖 `TalkToManufacturingData`** Data Agent and ask natural-language questions like *"What is the latest sensor data for the compressor motor in the shangai industrial site?"* or *"Which site had the lowest quality in the last 4 weeks?"*
+
+![TalkToManufacturingData](dataagent.png)
+
+Feel free to explore the Notebooks, Eventhouse KQL queries, and pipeline to see how all the pieces fit together. 🔍
+
 ## 📁 Repository Layout
 
 | Folder | Purpose |
@@ -70,8 +88,4 @@ After the items are published, open the **`PostDeploymentNotebook`** in the Fabr
 | `deploy.py` | 🚢 fabric-cicd deployment script |
 | `parameter.yml` | 🎛️ Environment-specific parameter overrides |
 
-## 🎉 Have Fun
-
-Once `PostDeploymentNotebook` finishes, open the **MQTT RTI Dashboard** and the **manufacturingdemo** report to watch real-time manufacturing insights light up. ⚡
-
-Then chat with the **🤖 DA_Manuagent Data Agent** — ask natural-language questions like *"Which plant had the most quality issues last shift?"* or *"Show me top 5 equipment by downtime"* — and dive deeper into the notebooks, Eventhouse KQL queries, and pipeline to see how all the pieces fit together. 🔍
+## 
