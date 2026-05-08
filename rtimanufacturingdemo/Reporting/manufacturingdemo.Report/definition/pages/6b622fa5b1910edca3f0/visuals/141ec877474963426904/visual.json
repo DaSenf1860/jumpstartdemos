@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "141ec877474963426904",
   "position": {
     "x": 490.13902435473773,
@@ -47,6 +47,34 @@
               },
               "queryRef": "oee.Average Availability",
               "nativeQueryRef": "Average Availability"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Average Performance"
+                }
+              },
+              "queryRef": "oee.Average Performance",
+              "nativeQueryRef": "Average Performance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Average Quality"
+                }
+              },
+              "queryRef": "oee.Average Quality",
+              "nativeQueryRef": "Average Quality"
             }
           ]
         }

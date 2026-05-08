@@ -107,18 +107,13 @@
         "sort": [
           {
             "field": {
-              "Aggregation": {
+              "Column": {
                 "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "oee"
-                      }
-                    },
-                    "Property": "ideal_output"
+                  "SourceRef": {
+                    "Entity": "dim_date"
                   }
                 },
-                "Function": 0
+                "Property": "date_id"
               }
             },
             "direction": "Descending"

@@ -1,19 +1,37 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "65488340f5ec66e6569c",
   "position": {
-    "x": 21.465942672470266,
-    "y": 120.44778943997204,
+    "x": 21.25,
+    "y": 120.625,
     "z": 5000,
-    "height": 138.33607500036393,
-    "width": 246.85834073340806,
+    "height": 138.125,
+    "width": 246.25,
     "tabOrder": 3000
   },
   "visual": {
-    "visualType": "kpi",
+    "visualType": "gauge",
     "query": {
       "queryState": {
-        "Goal": {
+        "MaxValue": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "oee"
+                    }
+                  },
+                  "Property": "Maximum"
+                }
+              },
+              "queryRef": "oee.Maximum",
+              "nativeQueryRef": "Maximum"
+            }
+          ]
+        },
+        "TargetValue": {
           "projections": [
             {
               "field": {
@@ -31,7 +49,7 @@
             }
           ]
         },
-        "Indicator": {
+        "Y": {
           "projections": [
             {
               "field": {
@@ -48,29 +66,148 @@
               "nativeQueryRef": "Average OEE"
             }
           ]
-        },
-        "TrendLine": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_date"
-                    }
-                  },
-                  "Property": "date_id"
-                }
-              },
-              "queryRef": "dim_date.date_id",
-              "nativeQueryRef": "date_id"
-            }
-          ]
         }
       },
       "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "oee"
+                  }
+                },
+                "Property": "Average OEE"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
         "isDefaultSort": true
       }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "And": {
+                              "Left": {
+                                "Comparison": {
+                                  "ComparisonKind": 2,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "oee"
+                                        }
+                                      },
+                                      "Property": "Average OEE"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
+                                      "Value": "0D"
+                                    }
+                                  }
+                                }
+                              },
+                              "Right": {
+                                "Comparison": {
+                                  "ComparisonKind": 3,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "oee"
+                                        }
+                                      },
+                                      "Property": "Average OEE"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
+                                      "Value": "0.6D"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#D64550'"
+                            }
+                          }
+                        },
+                        {
+                          "Condition": {
+                            "And": {
+                              "Left": {
+                                "Comparison": {
+                                  "ComparisonKind": 2,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "oee"
+                                        }
+                                      },
+                                      "Property": "Average OEE"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
+                                      "Value": "0.6D"
+                                    }
+                                  }
+                                }
+                              },
+                              "Right": {
+                                "Comparison": {
+                                  "ComparisonKind": 3,
+                                  "Left": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "oee"
+                                        }
+                                      },
+                                      "Property": "Average OEE"
+                                    }
+                                  },
+                                  "Right": {
+                                    "Literal": {
+                                      "Value": "103D"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#4EEC7D'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [

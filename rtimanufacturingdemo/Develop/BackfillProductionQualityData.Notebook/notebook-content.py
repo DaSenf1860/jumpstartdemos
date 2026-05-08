@@ -46,81 +46,89 @@ print(f"✅ Success: reading sample data")
 
 # CELL ********************
 
-timewarp = 10
+
+from pyspark.sql.functions import (
+    col, date_sub, year, month, dayofmonth, make_timestamp,
+    to_timestamp, hour, minute, second,
+    current_date, current_timestamp, date_format,
+    rand, floor, lit, when
+)
+from pyspark.sql import Window
+
+timewarp = 90
 
 # Today (UTC) and current time as HH:mm:ss (UTC)
 today = current_date()
 current_time_utc = date_format(current_timestamp(), "HH:mm:ss")
 
-for i in range(timewarp):
-    # pick a random source day (1..10)
-    random_day = random.randint(1, 10)
+# 1) Pre-filter “today” rows in the original df (for i == 0 logic)
+#    We’ll apply this condition after we assign day offsets.
+df_base = df
+expand_factor = 50
 
-    # base filter: pick that source day
-    df_ = df.filter(col("Date") == random_day)
+factor_df = spark.range(expand_factor).toDF("dup_id")
+df_expanded = df_base.crossJoin(factor_df).drop("dup_id")
 
-    # for today (i == 0), only keep times in the past (UTC)
-    if i == 0:
-        df_ = df_.filter(col("Time") < current_time_utc)
+# 2) Create a DataFrame of all day offsets [0 .. timewarp-1]
+offset_df = spark.range(timewarp).withColumnRenamed("id", "day_offset")
 
-    # if no rows, skip this iteration
-    if df_.rdd.isEmpty():
-        continue
+# 3) Assign each row a random day_offset in [0, timewarp-1]
+#    We use a random integer based on `rand()`; this replaces your Python randint.
+df_with_offset = df_expanded.withColumn(
+    "day_offset",
+    floor(rand() * timewarp).cast("int")
+)
 
-    df_modified = (
-        df_
-        # new date is "today - i days"
-        .withColumn("Date", date_format(date_sub(today, i), "yyyy-MM-dd"))
-        # parse Time (HH:mm:ss) once
-        .withColumn("time_ts", to_timestamp(col("Time"), "HH:mm:ss"))
-        # new timestamp = adjusted date + original time-of-day
-        .withColumn(
-            "timestamp",
-            make_timestamp(
-                year(col("Date")),
-                month(col("Date")),
-                dayofmonth(col("Date")),
-                hour(col("time_ts")),
-                minute(col("time_ts")),
-                second(col("time_ts"))
-            )
+# 4) Compute new Date for each row = today - day_offset
+df_with_new_date = (
+    df_with_offset
+    .withColumn("Date", date_format(date_sub(today, col("day_offset")), "yyyy-MM-dd"))
+    .withColumn("time_ts", to_timestamp(col("Time"), "HH:mm:ss"))
+    .withColumn(
+        "timestamp",
+        make_timestamp(
+            year(col("Date")),
+            month(col("Date")),
+            dayofmonth(col("Date")),
+            hour(col("time_ts")),
+            minute(col("time_ts")),
+            second(col("time_ts"))
         )
-        .drop("time_ts")
     )
+    .drop("time_ts")
+)
 
-    # e.g. append to your target table
-    df_modified.write.mode("append").format("delta").saveAsTable("dbo.production_quality")
-    print(f"✅ Success: Creating data for date: t-{i}")
+# 5) Apply your “for today (i == 0)” logic:
+#    i == 0 <=> day_offset == 0.
+df_final = df_with_new_date.where(
+    (col("day_offset") != 0) | (col("Time") < current_time_utc)
+).drop("day_offset")
+df_final = df_final.drop("date_hour")
 
+# 6) Single parallel write (no loop)
+df_final.write.mode("append").format("delta").saveAsTable("dbo.production_quality")
 
+spark.sql("""
+    DELETE FROM ManufacturingData.dbo.production_quality
+    WHERE site_id = 1
+      AND HOUR(timestamp) BETWEEN 9 AND 11
+""")
 
-# METADATA ********************
+spark.sql("""
+    UPDATE ManufacturingData.dbo.production_quality
+    SET cycle_time_seconds = 12
+    WHERE site_id = 2
+      AND HOUR(timestamp) BETWEEN 16 AND 22
+""")
 
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-df = spark.sql("SELECT * FROM ManufacturingData.dbo.production_quality")
-all_count = df.count()
-df = df.dropDuplicates(["timestamp","machine_id","site_id"])
-without_duplicates = df.count()
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-if all_count > without_duplicates:
-    df.write.format("delta").mode("overwrite").saveAsTable("ManufacturingData.dbo.production_quality")
-    print(f"✅ Success: Cleaning up duplicates")
-print(f"✅ Success: No duplicates")
+spark.sql("""
+    UPDATE ManufacturingData.dbo.production_quality
+    SET first_pass_yield = 0,
+        surface_quality  = 0
+    WHERE site_id = 3
+      AND HOUR(timestamp) BETWEEN 12 AND 15
+""")
+print(f"✅ Success: Creating data for the last {timewarp} days")
 
 
 # METADATA ********************
@@ -141,10 +149,12 @@ max_date_hour = df.agg(F.max("timestamp").alias("max_date_hour")).collect()[0][0
 end_date = max_date_hour
 
 spark.sql("DROP TABLE IF EXISTS ManufacturingData.dbo.dim_date")
-start_date = datetime(2026, 1, 1)
+start_date = (end_date - timedelta(days=timewarp)).replace(minute=0, second=0, microsecond=0)
 
-date_list = [(start_date + timedelta(hours=x),) for x in range(1, 24*(end_date - start_date).days + 24)]
-    
+date_list = [(start_date + timedelta(hours=x),) for x in range(0, 24 * timewarp)]
+
+
+
 # Create DataFrame from date list
 df_dates = spark.createDataFrame(date_list, ["date"])
 
@@ -302,7 +312,7 @@ refresh_request_id = fabric.refresh_dataset("ManufacturingOperationsSemanticMode
 
 # CELL ********************
 
-i = 0
+i = 3
 j = 0
 while True:
     refresh_execution_details =  fabric.get_refresh_execution_details(dataset = "ManufacturingOperationsSemanticModel", refresh_request_id = refresh_request_id)
@@ -310,7 +320,7 @@ while True:
         if refresh_execution_details.extended_status == "Failed":
             refresh_request_id = fabric.refresh_dataset("ManufacturingOperationsSemanticModel")
             print("Failed semantic model refresh, trying now attempt")
-            i = 0
+            i = 5
             continue
         elif refresh_execution_details.extended_status == "Completed":
             print(f"✅ Success: Semantic Model refreshed")
@@ -319,21 +329,11 @@ while True:
             print(f"Timeout Semantic Model Refresh")
 
     print(f"Status: {refresh_execution_details.extended_status}" )
-    i = i + 1
+    i = i + 3
     j = j + i
     print(f"Trying it again in {i} seconds")
     sleep(i)
 
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
 
 
 # METADATA ********************

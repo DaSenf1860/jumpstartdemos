@@ -306,6 +306,9 @@ def kusto_command(csl):
     url = f"{eh_query_uri}/v1/rest/mgmt"
     body = {"csl": csl, "db": "ManufacturingRealtimeAnalytics"}
     resp = requests.post(url, json=body, headers=headers)
+    if resp.status_code != 200:
+        print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
+        print(f"Check: Eventhouse Query UI: {eh_query_uri}, Request Body: {body}, ")
     return resp
 
 ### KQL
@@ -334,9 +337,7 @@ kind = delta
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ External table for machines successful")
 
 
@@ -346,9 +347,7 @@ command = """
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ Ingested data from external table machines to a internal one")
 
 ### KQL
@@ -378,9 +377,7 @@ kind = delta
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ External table for sites successful")
 
 ### KQL
@@ -389,9 +386,7 @@ command = """
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ Ingested data from external table sites to a internal one")
 
 command = """
@@ -399,9 +394,7 @@ command = """
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ Success: Setting One Lake availability for production_quality")
 
 command = """
@@ -409,9 +402,7 @@ command = """
 """
 
 resp = kusto_command(command)
-if resp.status_code != 200:
-    print(f"❌ Failed KQL command: {command} with error message: {resp.text}")
-else:
+if resp.status_code == 200:
     print(f"✅ Success: Setting One Lake availability for sensors_parsed")
 
 
