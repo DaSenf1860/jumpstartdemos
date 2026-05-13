@@ -45,10 +45,7 @@ jobs = [{"source_table": "production_quality",
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-
-manu_lh_lake = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}"
-
-
+manu_lh_lake = notebookutils.lakehouse.getWithProperties(manu_lh).properties["abfsPath"]
 
 # METADATA ********************
 

@@ -78,7 +78,8 @@ fcc = FabricClientCore()
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-manufacturing_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
+manu_data = notebookutils.lakehouse.getWithProperties(manu_lh).properties["abfsPath"]
+manufacturing_data = f"{manu_data}/Tables"
 
 # METADATA ********************
 

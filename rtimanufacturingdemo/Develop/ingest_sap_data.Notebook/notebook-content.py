@@ -24,8 +24,9 @@
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-target = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables/landing_sap"
-source = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Files/data"
+manu_data = notebookutils.lakehouse.getWithProperties(manu_lh).properties["abfsPath"]
+target = f"{manu_data}/Tables/landing_sap"
+source = f"{manu_data}/Files/data"
 
 # METADATA ********************
 

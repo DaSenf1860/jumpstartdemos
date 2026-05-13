@@ -35,7 +35,8 @@ import requests
 
 ws_id = notebookutils.runtime.context["currentWorkspaceId"]
 manu_lh = "08cf1da1-4282-4f3d-bbb8-bfaa5e15d080"
-manu_data = f"abfss://{ws_id}@onelake.dfs.fabric.microsoft.com/{manu_lh}/Tables"
+manu_data_ = notebookutils.lakehouse.getWithProperties(manu_lh).properties["abfsPath"]
+manu_data = f"{manu_data_}/Tables"
 eh_query_uri = "https://trd-5dac5shauuupcc8kxn.z7.kusto.fabric.microsoft.com"
 
 
